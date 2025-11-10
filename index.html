@@ -1,10 +1,442 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArmyChoice - Твоя місія чекає</title>
+    <!-- Підключення шрифтів -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Підключення файлу стилів -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-$END$
+
+<!-- ==== Навігація ==== -->
+<nav class="navbar sticky">
+    <div class="container nav-container">
+        <a href="#home" class="nav-brand">ArmyChoice</a>
+
+        <div class="nav-links" id="nav-links">
+            <a href="#home" class="nav-link">Про нас</a>
+            <a href="#stages" class="nav-link">Етапи рекрутингу</a>
+            <a href="#projects" class="nav-link">Відгуки</a>
+            <a href="#contact" class="nav-link">Контакти</a>
+        </div>
+
+        <div class="nav-cta-desktop">
+            <a href="#contact" class="btn btn-primary">Залишити заявку</a>
+        </div>
+
+        <button class="nav-toggle" id="mobile-menu-button" aria-label="Відкрити головне меню">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Мобільне меню -->
+    <div class="mobile-menu hidden" id="mobile-menu">
+        <a href="#home" class="mobile-link">Головна</a>
+        <a href="#services" class="mobile-link">Спеціальності</a>
+        <a href="#stages" class="mobile-link">Процес</a>
+        <a href="#projects" class.com="mobile-link">Вакансії</a>
+        <a href="#reviews" class="mobile-link">Історії</a>
+        <a href="#contact" class="mobile-link">Контакти</a>
+        <div class="mobile-cta">
+            <a href="#contact" class="btn btn-primary">Залишити заявку</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ==== Головна ==== -->
+<header id="home" class="hero">
+    <div id="pixel-blast-background"></div>
+    <div class="container hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Ваш вибір у ЗСУ — наша місія</h1>
+            <p class="hero-subtitle">
+                Ми забезпечуємо прозорий підбір частини, повний супровід та чесну інформацію про службу
+            </p>
+            <div class="hero-btn-con">
+                <a href="#contact" class="btn btn-primary btn-large">Подати заявку</a>
+            </div>
+        </div>
+        <div class="hero-image-container">
+            <img src="static/ukrarmy.png" alt="Військова служба" class="hero-image">
+        </div>
+    </div>
+</header>
+
+<main>
+    <section id="about-us" class="section bg-camouflage-green about">
+        <div class="container">
+            <div class="about-head">
+                <span class="about-overline">Про нас</span>
+                <h2 class="section-title about-title">Рекрутинг, який працює чесно</h2>
+                <p class="section-subtitle-center about-subtitle">
+                    <strong>ArmyChoice</strong> — це рекрутинговий підрозділ при Шевченківському РТЦК та СП м. Львова.
+                    Ми допомагаємо кандидатам обрати військову частину відповідно до їхнього досвіду, мотивації та бажань.
+                    Працюємо прозоро, супроводжуємо на всіх етапах і гарантуємо підписання контракту саме з обраною частиною.
+                </p>
+            </div>
+
+            <div class="grid-3 about-features">
+                <!-- 1 -->
+                <div class="card feature-card">
+                    <div class="feature-icon">
+                        <!-- Лаконічний “щит” -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2l7 3v6c0 5-3.8 9-7 11-3.2-2-7-6-7-11V5l7-3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Чесність та прозорість</h3>
+                    <p>Говоримо прямо — без прикрас та замовчувань. Чітко пояснюємо умови служби в підрозділах.</p>
+                </div>
+
+                <!-- 2 -->
+                <div class="card feature-card">
+                    <div class="feature-icon">
+                        <!-- “Мітка-ціль” = про точний підбір -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2v2a8 8 0 1 1-8 8H2a10 10 0 1 0 10-10zM11 11h6v2h-8V7h2v4z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Твій вибір у центрі</h3>
+                    <p>Підбираємо частину під твої навички та мотивацію. Даємо кілька варіантів — обираєш найкращий.</p>
+                </div>
+
+                <!-- 3 -->
+                <div class="card feature-card">
+                    <div class="feature-icon">
+                        <!-- “Компас” = супровід по маршруту -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm4 6-3 7-7 3 3-7 7-3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Повний супровід</h3>
+                    <p>Від першої консультації до підписання контракту. Організовуємо контакт із командуванням.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="stages" class="section">
+        <div class="container">
+
+            <div class="stages-container">
+
+                <div class="stages-image-wrapper">
+                    <img src="static/ukrarmy.png" alt="Військовий ЗСУ" class="stages-image">
+                    <a href="#contact" class="btn btn-primary btn-large stages-image-button">Подати заявку</a>
+                </div>
+
+                <div class="stages-content-wrapper">
+                    <h2 class="stages-title">Ваш шлях до контракту</h2>
+                    <p class="stages-subtitle">Ми супроводжуємо на всіх етапах – від першої консультації до підписання контракту в обраній військовій частині.</p>
+
+                    <ul class="stages-list">
+
+                        <li class="stage-item">
+                            <div class="stage-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            </div>
+                            <div class="stage-text">
+                                <h3>Звернення та перша консультація</h3>
+                                <p>Ми уточнимо ваші побажання, досвід, мотивацію та розповідаємо про можливі напрями служби.</p>
+                            </div>
+                        </li>
+
+                        <li class="stage-item">
+                            <div class="stage-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            </div>
+                            <div class="stage-text">
+                                <h3>Підбір підрозділів і посад</h3>
+                                <p>Порівняємо кілька бригад, пояснюємо їх завдання та умови служби. Ви самі обираєте, куди хочете йти.</p>
+                            </div>
+                        </li>
+
+                        <li class="stage-item">
+                            <div class="stage-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            </div>
+                            <div class="stage-text">
+                                <h3>Знайомство з військовою частиною та командиром</h3>
+                                <p>Ми організовуємо зв'язок з представниками військової частини, щоб ви могли уточнити всі деталі та впевнитися у виборі.</p>
+                            </div>
+                        </li>
+
+                        <li class="stage-item">
+                            <div class="stage-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            </div>
+                            <div class="stage-text">
+                                <h3>Підготовка документів і супровід на ВЛК</h3>
+                                <p>Допомагаємо з оформленням документів і супроводжуємо на медичній комісії, щоб усі етапи пройшли швидко та без зайвих труднощів.</p>
+                            </div>
+                        </li>
+
+                        <li class="stage-item">
+                            <div class="stage-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            </div>
+                            <div class="stage-text">
+                                <h3>Узгодження посади та остаточне рішення</h3>
+                                <p>Ви остаточно визначаєтесь із посадою в обраній частині. Ми контролюємо, щоб ваш вибір був зафіксований і не змінювався.</p>
+                            </div>
+                        </li>
+
+                        <li class="stage-item">
+                            <div class="stage-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                            </div>
+                            <div class="stage-text">
+                                <h3>Відправка до місця проходження служби</h3>
+                                <p>Після проходження відбору та оформлення документів ви проходите 45-денну базову підготовку при навчальному центрі, а далі вирушаєте до обраної військової частини.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ==== Рекрутинг vs Мобілізація ==== -->
+    <section id="compare" class="section compare light bg-camouflage-green">
+        <div class="container">
+            <h2 class="compare-title">Чим рекрутинг відрізняється від мобілізації</h2>
+
+            <div class="compare-cols">
+                <!-- Рекрутинг -->
+                <div class="compare-col">
+                    <h3 class="compare-col-title">Рекрутинг</h3>
+                    <ul class="compare-list">
+                        <li class="compare-item">
+                            <span class="ico-check" aria-hidden="true"></span>
+                            <div><strong>Добровільно</strong><br>Людина самостійно звертається та ухвалює рішення про службу.</div>
+                        </li>
+                        <li class="compare-item">
+                            <span class="ico-check"></span>
+                            <div><strong>Право вибору бригади та посади</strong><br>Кандидат обирає підрозділ відповідно до своїх бажань і навичок.</div>
+                        </li>
+                        <li class="compare-item">
+                            <span class="ico-check"></span>
+                            <div><strong>Прямий зв’язок з командиром</strong><br>Організовуємо комунікацію з обраною бригадою до підписання контракту.</div>
+                        </li>
+                        <li class="compare-item">
+                            <span class="ico-check"></span>
+                            <div><strong>Прозора інформація про умови</strong><br>Кандидат заздалегідь знає умови служби, завдання підрозділу й посаду.</div>
+                        </li>
+                        <li class="compare-item">
+                            <span class="ico-check"></span>
+                            <div><strong>Повний супровід</strong><br>Консультації, документи, ВЛК, контракт — ведемо на всіх етапах.</div>
+                        </li>
+                        <li class="compare-item">
+                            <span class="ico-check"></span>
+                            <div><strong>Плановане рішення</strong><br>Людина сама визначає час і напрямок служби.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Мобілізація -->
+                <div class="compare-col">
+                    <h3 class="compare-col-title">Мобілізація</h3>
+                    <ul class="compare-list">
+                        <li class="compare-item">
+                            <span class="ico-check"></span>
+                            <div><strong>Не добровільно</strong><br>Рішення ухвалюється державою у межах законодавства.</div>
+                        </li>
+                        <li class="compare-item">
+                            <span class="ico-check"></span>
+                            <div><strong>Без вибору підрозділу</strong><br>Направлення відбувається відповідно до потреб ЗСУ.</div>
+                        </li>
+                        <li class="compare-item">
+                            <span class="ico-check"></span>
+                            <div><strong>Інший порядок ВЛК та документів</strong><br>Процес проходить за мобілізаційною процедурою.</div>
+                        </li>
+                        <li class="compare-item">
+                            <span class="ico-check"></span>
+                            <div><strong>Обмежена інформація</strong><br>Людину направляють одразу за потребами оборони.</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="compare-note">
+                <strong class="note-rect">Рекрутинг</strong> — це добровільний шлях із можливістю самостійно обрати військову частину та спеціальність.<br>
+                <strong class="note-mob">Мобілізація</strong> — державний процес, який не передбачає вибору.
+            </p>
+        </div>
+    </section>
+
+
+
+    <!-- ==== Відгуки / Testimonial Hero ==== -->
+    <section id="reviews" class="section testimonials">
+        <div class="container">
+            <h2 class="testi-title">Що кажуть про нашу роботу</h2>
+            <p class="testi-subtitle">
+                Join thousands of satisfied customers who have transformed their banking experience
+                with Banko.
+            </p>
+
+            <div class="testi-grid">
+                <!-- item 1 -->
+                <figure class="testi-item">
+                    <div class="testi-quote">“</div>
+                    <blockquote class="testi-text">
+                        Отримали вмотивованих кандидатів, які чітко розуміли умови служби.
+                        Працюємо швидко та результативно.
+                    </blockquote>
+                    <img class="testi-badge" src="https://placehold.co/72x84/FFFFFF/0C3B6E?text=II" alt="Нашивка">
+                    <figcaption class="testi-caption">Командир батальйону</figcaption>
+                </figure>
+
+                <!-- item 2 -->
+                <figure class="testi-item">
+                    <div class="testi-quote">“</div>
+                    <blockquote class="testi-text">
+                        Головне — чесно сказали, які умови в частині. Підтримували на всіх етапах.
+                        Жодних сюрпризів при підписанні.
+                    </blockquote>
+                    <img class="testi-badge" src="https://placehold.co/72x84/FFFFFF/0C3B6E?text=II" alt="Нашивка">
+                    <figcaption class="testi-caption">Командир батальйону</figcaption>
+                </figure>
+
+                <!-- item 3 -->
+                <figure class="testi-item">
+                    <div class="testi-quote">“</div>
+                    <blockquote class="testi-text">
+                        Страшно було йти в ТЦК самому. Тут усе пояснили та допомогли зв’язатися
+                        з командиром. Підписав контракт у тій бригаді, яку сам обрав.
+                    </blockquote>
+                    <img class="testi-badge" src="https://placehold.co/72x84/FFFFFF/0C3B6E?text=II" alt="Нашивка">
+                    <figcaption class="testi-caption">Командир батальйону</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==== FAQ / Питання ==== -->
+    <section id="faq" class="section faq">
+        <div class="container">
+            <h2 class="faq-title">Запитання, які нам ставлять найчастіше</h2>
+
+            <ol class="faq-list">
+                <li class="faq-item">
+                    <h3 class="faq-q">Чи можу я сам обрати бригаду?</h3>
+                    <p class="faq-a">Так. Ми працюємо з різними підрозділами, і ви самі обираєте бригаду та напрям служби.
+                        Ми лише допомагаємо зробити правильний вибір.</p>
+                </li>
+
+                <li class="faq-item">
+                    <h3 class="faq-q">Чи можуть мене перевести в іншу частину?</h3>
+                    <p class="faq-a">Ні. Ми гарантуємо супровід та підписання контракту саме з тією військовою частиною, яку ви обрали.</p>
+                </li>
+
+                <li class="faq-item">
+                    <h3 class="faq-q">Скільки часу триває процес від першого звернення до контракту?</h3>
+                    <p class="faq-a">У середньому від 10 до 30 днів — залежно від швидкості проходження ВЛК та оформлення документів.</p>
+                </li>
+
+                <li class="faq-item">
+                    <h3 class="faq-q">Чи потрібен досвід служби?</h3>
+                    <p class="faq-a">Ні. Є багато посад, які не потребують військового досвіду. Якщо досвід є — ми підберемо позицію під ваші навички.</p>
+                </li>
+
+                <li class="faq-item">
+                    <h3 class="faq-q">Чи можу я обрати конкретну посаду?</h3>
+                    <p class="faq-a">Так. Ми узгоджуємо посаду з бригадою до підписання контракту.</p>
+                </li>
+
+                <li class="faq-item">
+                    <h3 class="faq-q">Чи потрібно проходити військову підготовку?</h3>
+                    <p class="faq-a">Так. Після оформлення документів усі проходять 45-денний курс базової загальної військової підготовки.</p>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- ==== Контакти ==== -->
+    <section id="contact" class="section bg-camouflage-green">
+        <div class="container">
+            <h2 class="section-title">Зв'яжіться з нами</h2>
+            <div class="contact-container">
+
+                <div class="contact-form-wrapper">
+                    <h3 class="contact-subtitle">Готовий долучитись?</h3>
+                    <form id="contact-form" class="contact-form">
+                        <div>
+                            <label for="name" class="sr-only">Ім'я</label>
+                            <input type="text" name="name" id="name" autocomplete="name" placeholder="Ваше ім'я" class="form-input">
+                        </div>
+                        <div>
+                            <label for="email" class="sr-only">Email</label>
+                            <input type="email" name="email" id="email" autocomplete="email" placeholder="Ваш Email" class="form-input">
+                        </div>
+                        <div>
+                            <label for="message" class="sr-only">Повідомлення</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Опишіть ваші навички, досвід або бажану посаду..." class="form-input"></textarea>
+                        </div>
+
+
+                        <div class="gemini-feature">
+                            <button type="button" id="gemini-analyze-button" class="btn btn-primary">
+                                Надіслати заявку
+                            </button>
+                        </div>
+
+
+
+                    </form>
+                </div>
+
+                <div class="contact-info">
+                    <h3 class="contact-subtitle">Контактна інформація</h3>
+                    <p>Готові відповісти на будь-які запитання. Зв'яжіться з нами зручним для вас способом.</p>
+                    <div class="contact-details">
+                        <p>
+                            <a href="mailto:info@recruit.ua" class="contact-link">
+                                <span class="contact-icon">📧</span>
+                                <span>info@recruit.ua</span>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="tel:+380991234567" class="contact-link">
+                                <span class="contact-icon">📞</span>
+                                <span>+38 (099) 123-45-67</span>
+                            </a>
+                        </p>
+                    </div>
+                    <h4 class="contact-social-title">Ми в соцмережах</h4>
+                    <div class="contact-social-links">
+                        <a href="#" class="social-link">Telegram</a>
+                        <a href="#" class="social-link">Signal</a>
+                        <a href="#" class="social-link">Facebook</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ==== Футер ==== -->
+<footer class="footer">
+    <div class="container footer-container">
+        <a href="#home" class="nav-brand">ArmyChoice</a>
+        <div class="footer-copy">
+            &copy; 2025 ArmyChoice - Всі права захищено.
+        </div>
+    </div>
+</footer>
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/postprocessing/6.35.4/postprocessing.min.js"></script>-->
+
+<!--<script src="js/PixelBlast.js"></script>-->
+
+<script src="js/script.js"></script>
 </body>
 </html>
