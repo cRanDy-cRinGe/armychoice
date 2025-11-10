@@ -51,22 +51,36 @@
 
 <!-- ==== Головна ==== -->
 <header id="home" class="hero">
-    <div id="pixel-blast-background"></div>
     <div class="container hero-container">
         <div class="hero-content">
-            <h1 class="hero-title">Ваш вибір у ЗСУ — наша місія</h1>
+            <p class="hero-kicker">Прозорий добір • Повний супровід</p>
+            <h1 class="hero-title">
+                Ваш вибір у ЗСУ — <span class="hero-highlight">наша місія</span>
+            </h1>
             <p class="hero-subtitle">
                 Ми забезпечуємо прозорий підбір частини, повний супровід та чесну інформацію про службу
             </p>
+
             <div class="hero-btn-con">
                 <a href="#contact" class="btn btn-primary btn-large">Подати заявку</a>
             </div>
+
+
         </div>
+
         <div class="hero-image-container">
-            <img src="static/ukrarmy.png" alt="Військова служба" class="hero-image">
+            <div class="hero-frame">
+                <img src="static/ukrarmy.png" alt="Військова служба" class="hero-image">
+                <div class="image-badge">безкоштовна консультація</div>
+            </div>
         </div>
     </div>
+
+    <button class="scroll-cue" aria-label="Прокрутити до наступного блоку" onclick="document.querySelector('#stages')?.scrollIntoView({behavior:'smooth'})">
+        <span></span>
+    </button>
 </header>
+
 
 <main>
     <section id="about-us" class="section bg-camouflage-green about">
