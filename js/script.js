@@ -1,226 +1,308 @@
 document.addEventListener('DOMContentLoaded', () => {
+    /* =========================
+       Helpers
+    ==========================*/
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-    // ==== НОВИЙ КОД: Запуск фону Hero (PixelBlast) ====
-    const heroBackgroundContainer = document.getElementById('pixel-blast-background');
-    if (heroBackgroundContainer) {
+    const navbar = $('.navbar');
+    const navHeight = () => (navbar ? navbar.getBoundingClientRect().height : 0);
 
-        // Отримуємо колір з твоїх CSS-змінних
-        const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--sandstone').trim();
+    /* =========================
+       Mobile Menu (animated)
+       HTML expects:
+       - #mobile-menu-button
+       - #mobile-menu
+       CSS already provides .hidden (display:none)
+    ==========================*/
+    const menuBtn = $('#mobile-menu-button');
+    const mobileMenu = $('#mobile-menu');
+    
 
-        new PixelBlastEffect(heroBackgroundContainer, {
-            variant: "circle",
-            pixelSize: 6,
-            color: themeColor, // Використовуємо колір з твого CSS
-            patternScale: 3,
-            patternDensity: 1.2,
-            pixelSizeJitter: 0.5,
-            enableRipples: true,
-            rippleSpeed: 0.4,
-            rippleThickness: 0.12,
-            rippleIntensityScale: 1.5,
-            liquid: true,
-            liquidStrength: 0.12,
-            liquidRadius: 1.2,
-            liquidWobbleSpeed: 5,
-            speed: 0.6,
-            edgeFade: 0.25,
-            transparent: true
+    // Small utility to play WAAPI animation with graceful fallback
+    const playAnim = (el, keyframes, opts) => {
+        if (!el) return { finished: Promise.resolve() };
+        if (el.animate) {
+            const a = el.animate(keyframes, opts);
+            return a;
+        }
+        // Fallback: no animation API → do nothing
+        return { finished: Promise.resolve() };
+    };
+
+    const openMenu = () => {
+        if (!mobileMenu) return;
+        // показуємо
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('open');          // ← додано
+        document.body.classList.add('menu-open');
+        menuBtn?.classList.add('is-open');
+        menuBtn?.setAttribute('aria-expanded', 'true');
+
+        // анімація появи
+        mobileMenu.style.willChange = 'transform, opacity';
+        playAnim(
+            mobileMenu,
+            [
+                { transform: 'translateY(-16px)', opacity: 0 },
+                { transform: 'translateY(0)', opacity: 1 }
+            ],
+            { duration: 280, easing: 'ease' }
+        ).finished.finally(() => {
+            mobileMenu.style.willChange = '';
+        });
+    };
+
+    const closeMenu = () => {
+        if (!mobileMenu) return;
+        // анімація зникнення
+        mobileMenu.style.willChange = 'transform, opacity';
+        playAnim(
+            mobileMenu,
+            [
+                { transform: 'translateY(0)', opacity: 1 },
+                { transform: 'translateY(-16px)', opacity: 0 }
+            ],
+            { duration: 220, easing: 'ease' }
+        ).finished.finally(() => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('open');     // ← додано
+            document.body.classList.remove('menu-open');
+            menuBtn?.classList.remove('is-open');
+            menuBtn?.setAttribute('aria-expanded', 'false');
+            mobileMenu.style.willChange = '';
+        });
+    };
+
+
+    const toggleMenu = () => {
+        if (!mobileMenu) return;
+        const isOpen = !mobileMenu.classList.contains('hidden');
+        isOpen ? closeMenu() : openMenu();
+    };
+
+    // Init menu
+    if (mobileMenu) {
+        mobileMenu.classList.add('hidden'); // гарантовано сховано на старті
+    }
+    menuBtn?.addEventListener('click', toggleMenu);
+
+    // Close on Esc
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+            closeMenu();
+        }
+    });
+
+    // Close when clicking outside panel (only if open)
+    document.addEventListener('click', (e) => {
+        if (!mobileMenu || mobileMenu.classList.contains('hidden')) return;
+        const clickedInside = mobileMenu.contains(e.target) || menuBtn?.contains(e.target);
+        if (!clickedInside) closeMenu();
+    });
+
+    // Close after clicking anchor inside menu
+    if (mobileMenu) {
+        $$('a[href^="#"]', mobileMenu).forEach((a) => {
+            a.addEventListener('click', () => closeMenu());
         });
     }
-    // ==== Керування мобільним меню ====
-    const menuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
 
-    menuButton.addEventListener('click', () => {
-        // Перемикаємо клас 'hidden', який контролює відображення
-        mobileMenu.classList.toggle('hidden');
-    });
+    /* =========================
+       Smooth anchor scroll (desktop & mobile)
+       — компенсуємо висоту sticky-навігації
+    ==========================*/
+    $$('a[href^="#"]').forEach((a) => {
+        a.addEventListener('click', (e) => {
+            const href = a.getAttribute('href');
+            if (!href || href === '#') return;
+            const target = document.getElementById(href.slice(1));
+            if (!target) return;
 
-    // ==== Плавний скрол та закриття мобільного меню ====
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
             e.preventDefault();
-
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-
-            // Закриваємо мобільне меню, якщо воно відкрите
-            if (!mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
-            }
+            const top = window.scrollY + target.getBoundingClientRect().top - navHeight() - 8;
+            window.scrollTo({ top, behavior: 'smooth' });
         });
     });
+    const closeBtn = $('#close-menu-button');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();   // щоб не зловив «клік поза меню»
+            closeMenu();
+        });
+    }
 
-    // ==== Слайдер для відгуків (Історії) ====
-    const track = document.querySelector('.slider-track');
+    /* =========================
+       Hero background effect (guarded)
+       — у твоєму попередньому коді викликалась PixelBlastEffect.
+         Тепер не падаємо, якщо бібліотеки немає.
+    ==========================*/
+    const heroBg = $('#pixel-blast-background');
+    try {
+        if (heroBg && typeof PixelBlastEffect === 'function') {
+            const themeColor = getComputedStyle(document.documentElement)
+                .getPropertyValue('--sandstone').trim();
+            new PixelBlastEffect(heroBg, {
+                variant: "circle",
+                pixelSize: 6,
+                color: themeColor,
+                patternScale: 3,
+                patternDensity: 1.2,
+                pixelSizeJitter: 0.5,
+                enableRipples: true,
+                rippleSpeed: 0.4,
+                rippleThickness: 0.12,
+                rippleIntensityScale: 1.5,
+                liquid: true,
+                liquidStrength: 0.12,
+                liquidRadius: 1.2,
+                liquidWobbleSpeed: 5,
+                speed: 0.6,
+                edgeFade: 0.25,
+                transparent: true
+            });
+        }
+    } catch (_) {
+        // Тихо ігноруємо, щоб нічого не зламати
+    }
 
-    // Перевірка, чи слайдер існує на сторінці
+    /* =========================
+       Optional slider (історії/відгуки)
+       — безпечні перевірки: якщо елементів немає, просто пропускаємо
+    ==========================*/
+    const track = $('.slider-track');
     if (track) {
         const slides = Array.from(track.children);
-        const dotsContainer = document.querySelector('.slider-dots');
-        const dots = Array.from(dotsContainer.children);
-        let currentSlide = 0;
-        let slideInterval;
+        const dotsContainer = $('.slider-dots');
+        const dots = dotsContainer ? Array.from(dotsContainer.children) : [];
+        let current = 0;
+        let timer;
 
-        function showSlide(index) {
-            if (!track || !slides.length || !dots.length) return;
+        const show = (i) => {
+            if (!slides.length) return;
+            const idx = (i + slides.length) % slides.length;
+            track.style.transform = `translateX(-${idx * 100}%)`;
+            dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+            current = idx;
+        };
+        const start = () => { stop(); timer = setInterval(() => show(current + 1), 5000); };
+        const stop  = () => { if (timer) clearInterval(timer); };
 
-            // Зсуваємо трек
-            track.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach((d, i) => d.addEventListener('click', () => { show(i); start(); }));
+        if (slides.length) { show(0); start(); }
 
-            // Оновлюємо активну крапку
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-
-            currentSlide = index;
-        }
-
-        // Автоматичне перемикання
-        function startSlideShow() {
-            stopSlideShow(); // Зупиняємо попередній, щоб уникнути дублювання
-            slideInterval = setInterval(() => {
-                const nextSlide = (currentSlide + 1) % slides.length;
-                showSlide(nextSlide);
-            }, 5000); // Кожні 5 секунд
-        }
-
-        function stopSlideShow() {
-            clearInterval(slideInterval);
-        }
-
-        // Керування крапками
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showSlide(index);
-                startSlideShow(); // Перезапускаємо таймер при ручному виборі
-            });
-        });
-
-        // Ініціалізація
-        if (slides.length > 0) {
-            showSlide(0);
-            startSlideShow();
-
-            // Пауза при наведенні
-            track.addEventListener('mouseenter', stopSlideShow);
-            track.addEventListener('mouseleave', startSlideShow);
-        }
+        track.addEventListener('mouseenter', stop);
+        track.addEventListener('mouseleave', start);
     }
 
-    // ==== Функціонал Gemini API (Військовий рекрутер) ====
-    const analyzeButton = document.getElementById('gemini-analyze-button');
+    /* =========================
+       Gemini helper (robust)
+       — працює навіть без елементів loading/result
+    ==========================*/
+    const analyzeBtn   = document.getElementById('gemini-analyze-button');
     const messageInput = document.getElementById('message');
-    const geminiLoading = document.getElementById('gemini-loading');
-    const geminiResult = document.getElementById('gemini-result');
-    const contactForm = document.getElementById('contact-form');
+    const gemLoading   = document.getElementById('gemini-loading');
+    const gemResult    = document.getElementById('gemini-result');
+    const contactForm  = document.getElementById('contact-form');
 
-    // Натискання на кнопку "Проаналізувати"
-    if (analyzeButton) { // Додамо перевірку, що кнопка існує
-        analyzeButton.addEventListener('click', async () => {
-            const userMessage = messageInput.value;
+    const showEl = (el) => el && el.classList && el.classList.remove('hidden');
+    const hideEl = (el) => el && el.classList && el.classList.add('hidden');
 
-            if (userMessage.trim().length < 10) {
-                geminiResult.innerHTML = '<p class="error-message">Будь ласка, опишіть ваші навички, досвід або бажану посаду детальніше (хоча б 10 символів).</p>';
-                geminiResult.classList.remove('hidden');
-                return;
-            }
+    const callGeminiAPI = async (userText, systemPrompt) => {
+        // Якщо ключ не заданий — повертаємо коротку «локальну» відповідь,
+        // щоб інтерфейс працював і не падав
+        const apiKey = ""; // додай свій ключ сюди при потребі
+        if (!apiKey) {
+            return [
+                "Враховуючи ваш опис, ймовірно підійдуть спеціальності: Оператор БПЛА, Зв’язківець, Логіст.",
+                "Наступні кроки: 1) заповніть форму заявки; 2) пройдіть співбесіду з рекрутером; 3) підготуйте документи для ВЛК."
+            ].join("\n");
+        }
 
-            geminiLoading.classList.remove('hidden');
-            geminiResult.classList.add('hidden');
-            geminiResult.innerHTML = '';
-
-            try {
-                const systemPrompt = "Ти — досвідчений військовий рекрутер для ЗСУ. Твоя мета — допомогти кандидатам. Прочитай опис навичок, досвіду або побажань кандидата. На основі цього, коротко (не більше 100 слів) запропонуй, які військові спеціальності (напр., Оператор БПЛА, Медик, Зв'язовець, Інженер, Логіст, Стрілець) йому, ймовірно, підійдуть, і запропонуй 2-3 ключові етапи для подачі заявки (напр., 'заповніть форму', 'пройдіть співбесіду', 'підготуйте документи'). Відповідай українською мовою. Твоя відповідь має бути чіткою, підбадьорливою та мотивуючою.";
-
-                const responseText = await callGeminiAPI(userMessage, systemPrompt);
-
-                // Форматуємо відповідь для HTML (замінюємо переноси рядків на <br>)
-                const formattedResponse = responseText.replace(/\n/g, '<br>');
-
-                geminiResult.innerHTML = `<h4 class="gemini-result-title">✨ Рекомендації по вакансіях:</h4><p>${formattedResponse}</p>`;
-
-            } catch (error) {
-                console.error("Gemini API call failed:", error);
-                geminiResult.innerHTML = '<p class="error-message">Виникла помилка під час аналізу. Будь ласка, спробуйте ще раз або надішліть форму як є.</p>';
-
-            } finally {
-                geminiLoading.classList.add('hidden');
-                geminiResult.classList.remove('hidden');
-            }
-        });
-    }
-
-    // Обробка відправки форми (симуляція)
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            // У реальному проекті тут була б відправка даних
-            alert('Заявка прийнята (симуляція)');
-            // Очищення форми
-            contactForm.reset();
-            geminiResult.classList.add('hidden');
-            geminiResult.innerHTML = '';
-        });
-    }
-
-
-    // ==== Асинхронна функція для виклику Gemini API ====
-    async function callGeminiAPI(userQuery, systemPrompt) {
-        const apiKey = ""; // API ключ обробляється оточенням
+        // Якщо ключ є — спробуємо справжній виклик
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
         const payload = {
-            contents: [{ parts: [{ text: userQuery }] }],
-            systemInstruction: {
-                parts: [{ text: systemPrompt }]
-            },
+            contents: [{ parts: [{ text: userText }] }],
+            systemInstruction: { parts: [{ text: systemPrompt }] }
         };
 
-        let response;
-        let retries = 3;
-        let delay = 1000;
-
-        for (let i = 0; i < retries; i++) {
+        for (let i = 0, delay = 800; i < 3; i++, delay *= 2) {
             try {
-                response = await fetch(apiUrl, {
+                const r = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    const candidate = result.candidates?.[0];
-                    if (candidate && candidate.content?.parts?.[0]?.text) {
-                        return candidate.content.parts[0].text; // Успішна відповідь
-                    } else {
-                        throw new Error("Invalid response structure from API");
-                    }
-                } else if (response.status === 429 || response.status >= 500) {
-                    // Обмеження запитів або помилка сервера, очікування та повторна спроба
-                    if (i === retries - 1) throw new Error(`API error: ${response.statusText} after ${retries} attempts`);
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    delay *= 2; // Експоненційне зростання затримки
-                } else {
-                    // Інша помилка клієнта
-                    throw new Error(`API error: ${response.status} ${response.statusText}`);
+                if (r.ok) {
+                    const data = await r.json();
+                    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (text) return text;
+                    throw new Error("Invalid response structure");
                 }
-            } catch (error) {
-                // Помилка мережі або інша, повторна спроба
-                if (i === retries - 1) throw error; // Кидаємо помилку після останньої спроби
-                await new Promise(resolve => setTimeout(resolve, delay));
-                delay *= 2;
+                if (r.status === 429 || r.status >= 500) {
+                    await new Promise(res => setTimeout(res, delay));
+                    continue;
+                }
+                throw new Error(`API error: ${r.status} ${r.statusText}`);
+            } catch (err) {
+                if (i === 2) throw err;
+                await new Promise(res => setTimeout(res, delay));
             }
         }
-        // Цей код не мав би виконуватися, але на випадок
-        throw new Error("API request failed after retries");
+        throw new Error("API request failed");
+    };
+
+    if (analyzeBtn) {
+        analyzeBtn.addEventListener('click', async () => {
+            const text = (messageInput?.value ?? "").trim();
+            if (text.length < 10) {
+                if (gemResult) {
+                    gemResult.innerHTML = '<p class="error-message">Опишіть навички/досвід трохи детальніше (мінімум 10 символів).</p>';
+                    showEl(gemResult);
+                } else {
+                    alert('Опишіть навички/досвід трохи детальніше (мінімум 10 символів).');
+                }
+                return;
+            }
+
+            hideEl(gemResult);
+            showEl(gemLoading);
+
+            const systemPrompt =
+                "Ти — досвідчений військовий рекрутер для ЗСУ. " +
+                "На основі опису кандидата коротко (до 100 слів) запропонуй 2–3 імовірні спеціальності " +
+                "та 2–3 наступні кроки (подати заявку, співбесіда, підготувати документи). " +
+                "Відповідай українською, чітко та підтримуюче.";
+
+            try {
+                const resp = await callGeminiAPI(text, systemPrompt);
+                const html = resp.replace(/\n/g, '<br>');
+                if (gemResult) {
+                    gemResult.innerHTML = `<h4 class="gemini-result-title">✨ Рекомендації:</h4><p>${html}</p>`;
+                    showEl(gemResult);
+                } else {
+                    alert(resp);
+                }
+            } catch (e) {
+                if (gemResult) {
+                    gemResult.innerHTML = '<p class="error-message">Сталася помилка під час аналізу. Спробуйте пізніше або просто надішліть форму.</p>';
+                    showEl(gemResult);
+                } else {
+                    alert('Сталася помилка під час аналізу. Спробуйте пізніше або просто надішліть форму.');
+                }
+            } finally {
+                hideEl(gemLoading);
+            }
+        });
+    }
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Заявка прийнята (симуляція). Дякуємо!');
+            contactForm.reset();
+            hideEl(gemResult);
+            if (gemResult) gemResult.innerHTML = '';
+        });
     }
 });
-// Зайву дужку } звідси видалено
