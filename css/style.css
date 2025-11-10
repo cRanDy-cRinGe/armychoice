@@ -600,19 +600,27 @@ h4 { font-size: 1.25rem; } /* 20px */
     font-weight: 700;
     color: var(--sandstone);
 }
-/* ==== Етапи (Нова версія - 2 колонки) ==== */
+/* ==== Етапи (Нова версія - 2 колонки) ==== *//* Базове розташування (desktop) */
 .stages-container {
     display: grid;
-    grid-template-columns: 1fr; /* Спершу одна колонка для мобільних */
-    gap: 3rem;
+    grid-template-columns: 1fr 1.25fr; /* зображення ліворуч, текст праворуч */
+    gap: 4rem;
     align-items: flex-start;
 }
 
-/* Налаштування для десктопу (2 колонки) */
-@media (min-width: 1024px) {
+/* Для мобільних — робимо 1 колонку і перевертаємо порядок */
+@media (max-width: 768px) {
     .stages-container {
-        grid-template-columns: 1fr 1.25fr; /* Ліва колонка вужча, права ширша */
-        gap: 4rem;
+        grid-template-columns: 1fr; /* одна колонка */
+    }
+
+    /* ставимо контент першим, картинку другою */
+    .stages-content-wrapper {
+        order: 1;
+    }
+
+    .stages-image-wrapper {
+        order: 2;
     }
 }
 
@@ -804,6 +812,24 @@ h4 { font-size: 1.25rem; } /* 20px */
     color: var(--signal-orange);
 }
 
+/* ==== reorder compare columns on mobile ==== */
+@media (max-width: 900px) {
+    .compare-cols {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    /* ставимо мобілізацію першою */
+    .compare-col:nth-child(2) {
+        order: 1;
+    }
+
+    /* рекрутинг після неї */
+    .compare-col:nth-child(1) {
+        order: 2;
+    }
+}
 
 
 /* Секція "Вакансії" має фон --camouflage-green, тому картки на ній мають бути --deep-green */
