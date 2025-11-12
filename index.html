@@ -8,6 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <!-- Підключення файлу стилів -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
@@ -17,9 +21,9 @@
         <a href="#home" class="nav-brand">ArmyChoice</a>
 
         <div class="nav-links" id="nav-links">
-            <a href="#home" class="nav-link">Про нас</a>
-            <a href="#stages" class="nav-link">Етапи рекрутингу</a>
-            <a href="#projects" class="nav-link">Відгуки</a>
+            <a href="#about-us" class="nav-link">Про нас</a>
+            <a href="#path" class="nav-link">Етапи рекрутингу</a>
+            <a href="#reviews" class="nav-link">Відгуки</a>
             <a href="#contact" class="nav-link">Контакти</a>
         </div>
 
@@ -40,8 +44,8 @@
             ✕
         </button>
         <a href="#about-us" class="nav-link">Про нас</a>
-        <a href="#stages" class="nav-link">Етапи рекрутингу</a>
-        <a href="#projects" class="nav-link">Відгуки</a>
+        <a href="#path" class="nav-link">Етапи рекрутингу</a>
+        <a href="#reviews" class="nav-link">Відгуки</a>
         <a href="#contact" class="nav-link">Контакти</a>
         <div class="mobile-cta">
             <a href="#contact" class="btn btn-primary">Залишити заявку</a>
@@ -55,14 +59,14 @@
         <div class="hero-content">
             <p class="hero-kicker">Прозорий добір • Повний супровід</p>
             <h1 class="hero-title">
-                Ваш вибір у ЗСУ — <span class="hero-highlight">наша місія</span>
+                Ваш вибір у ЗСУ — <span style="color: #D97700" class="hero-highlight">наша місія</span>
             </h1>
             <p class="hero-subtitle">
                 Ми забезпечуємо прозорий підбір частини, повний супровід та чесну інформацію про службу
             </p>
 
             <div class="hero-btn-con">
-                <a href="#contact" class="btn btn-primary btn-large">Подати заявку</a>
+                <a href="#contact" class="btn btn-primary btn-lяarge">Подати заявку</a>
             </div>
 
 
@@ -70,15 +74,15 @@
 
         <div class="hero-image-container">
             <div class="hero-frame">
-                <img src="static/ukrarmy.png" alt="Військова служба" class="hero-image">
-                <div class="image-badge">безкоштовна консультація</div>
+                <img src="static/solider.png" alt="Військова служба" class="hero-image">
+<!--                <div class="image-badge">безкоштовна консультація</div>-->
             </div>
         </div>
     </div>
 
-    <button class="scroll-cue" aria-label="Прокрутити до наступного блоку" onclick="document.querySelector('#stages')?.scrollIntoView({behavior:'smooth'})">
-        <span></span>
-    </button>
+<!--    <button class="scroll-cue" aria-label="Прокрутити до наступного блоку" onclick="document.querySelector('#stages')?.scrollIntoView({behavior:'smooth'})">-->
+<!--        <span></span>-->
+<!--    </button>-->
 </header>
 
 
@@ -97,8 +101,8 @@
 
             <div class="grid-3 about-features">
                 <!-- 1 -->
-                <div class="card feature-card">
-                    <div class="feature-icon">
+                <div class="card feature-card glass">
+                    <div class="feature-icon glass-icon">
                         <!-- Лаконічний “щит” -->
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M12 2l7 3v6c0 5-3.8 9-7 11-3.2-2-7-6-7-11V5l7-3z"/>
@@ -109,8 +113,8 @@
                 </div>
 
                 <!-- 2 -->
-                <div class="card feature-card">
-                    <div class="feature-icon">
+                <div class="card feature-card glass">
+                    <div class="feature-icon glass-icon">
                         <!-- “Мітка-ціль” = про точний підбір -->
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M12 2v2a8 8 0 1 1-8 8H2a10 10 0 1 0 10-10zM11 11h6v2h-8V7h2v4z"/>
@@ -121,8 +125,8 @@
                 </div>
 
                 <!-- 3 -->
-                <div class="card feature-card">
-                    <div class="feature-icon">
+                <div class="card feature-card glass">
+                    <div class="feature-icon glass-icon">
                         <!-- “Компас” = супровід по маршруту -->
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2zm4 6-3 7-7 3 3-7 7-3z"/>
@@ -132,104 +136,136 @@
                     <p>Від першої консультації до підписання контракту. Організовуємо контакт із командуванням.</p>
                 </div>
             </div>
+            <nav class="contacts-bar" aria-label="Контакти">
+                <a class="contact-item" href="https://t.me/armychoice" target="_blank" rel="noopener" aria-label="Telegram">
+                <span class="icon">
+                  <!-- Telegram -->
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.9 16.9l-.37 3.7c.53 0 .76-.23 1.03-.5l2.47-2.36 5.12 3.76c.94.52 1.6.25 1.84-.87l3.34-15.68v0c.3-1.42-.51-1.97-1.43-1.62L1.7 9.3c-1.4.54-1.38 1.32-.24 1.67l5.76 1.8 13.4-8.44c.63-.39 1.2-.18.73.25"/></svg>
+                </span>
+                                <span class="label">@armychoice</span>
+                            </a>
+
+                            <a class="contact-item" href="https://instagram.com/armychoice" target="_blank" rel="noopener" aria-label="Instagram">
+                <span class="icon">
+                  <!-- Instagram -->
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0-5.3c3 0 3.4 0 4.6.07 1.2.06 2 .25 2.7.53.7.27 1.3.63 1.9 1.2.57.57.93 1.2 1.2 1.9.28.7.47 1.5.53 2.7.07 1.2.07 1.6.07 4.6s0 3.4-.07 4.6c-.06 1.2-.25 2-.53 2.7a5 5 0 0 1-1.2 1.9 5 5 0 0 1-1.9 1.2c-.7.28-1.5.47-2.7.53-1.2.07-1.6.07-4.6.07s-3.4 0-4.6-.07c-1.2-.06-2-.25-2.7-.53a5 5 0 0 1-1.9-1.2 5 5 0 0 1-1.2-1.9c-.28-.7-.47-1.5-.53-2.7C2 15.4 2 15 2 12s0-3.4.07-4.6c.06-1.2.25-2 .53-2.7.27-.7.63-1.3 1.2-1.9.57-.57 1.2-.93 1.9-1.2.7-.28 1.5-.47 2.7-.53C8.6 2 9 2 12 2zM12 8.9A3.1 3.1 0 1 1 12 15a3.1 3.1 0 0 1 0-6.1zm5-2.2a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/></svg>
+                </span>
+                                <span class="label">@armychoice</span>
+                            </a>
+
+                            <a class="contact-item" href="https://facebook.com/armychoice" target="_blank" rel="noopener" aria-label="Facebook">
+                <span class="icon">
+                  <!-- Facebook -->
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3H13.5V8.5c0-.9.3-1.5 1.6-1.5h1.5V4.2c-.8-.1-1.7-.2-2.5-.2-2.5 0-4 1.5-4 4.1V11H7v3h3.1v8h3.4z"/></svg>
+                </span>
+                                <span class="label">/armychoice</span>
+                            </a>
+
+                            <a class="contact-item" href="tel:+380XXXXXXXXX" aria-label="Подзвонити">
+                <span class="icon">
+                  <!-- Phone -->
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.2 2.3 3.2 4.3 5.5 5.5l1.8-1.8c.3-.3.7-.4 1.1-.3 1 .3 2 .5 3.1.5.6 0 1 .4 1 .9v3.2c0 .6-.4 1-1 1C9.9 19.8 4.2 14.1 4.2 6.9c0-.6.5-1 1-1h3.2c.6 0 1 .4 1 .9 0 1.1.2 2.1.5 3.1.1.4 0 .8-.3 1.1l-1.8 1.8z"/></svg>
+                </span>
+                                <span class="label">+380 XX XXX XX XX</span>
+                            </a>
+
+                            <a class="contact-item" href="mailto:info@armychoice.ua" aria-label="Написати на email">
+                <span class="icon">
+                  <!-- Email -->
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 4h-17A1.5 1.5 0 0 0 2 5.5v13A1.5 1.5 0 0 0 3.5 20h17a1.5 1.5 0 0 0 1.5-1.5v-13A1.5 1.5 0 0 0 20.5 4zm-.4 3l-7.6 5.1L4.9 7h15.2zM4 17.5V8l8.2 5.5c.3.2.6.2.9 0L21 8v9.5H4z"/></svg>
+                </span>
+                                <span class="label">info@armychoice.ua</span>
+                </a>
+            </nav>
         </div>
     </section>
+    <section id="path" class="path-section">
+        <div class="container path-layout">
+            <!-- Ліва колонка: етапи -->
+            <div class="path-left">
+                <header class="path-head">
+                    <h2>Ваш шлях до контракту</h2>
+                    <p class="path-subtitle">
+                        Ми супроводжуємо на всіх етапах – від першої консультації до підписання контракту
+                        в обраній військовій частині.
+                    </p>
+                </header>
 
+                <ol class="path-steps" id="pathSteps" aria-label="Кроки шляху">
+                    <li class="step">
+                        <div class="rail"><span class="bullet">1</span></div>
+                        <article class="step-card">
+                            <h3>Звернення та перша консультація</h3>
+                            <p>Ми уточнимо ваші побажання, досвід, мотивацію та розповідаємо про можливі напрями служби.</p>
+                        </article>
+                    </li>
+                    <li class="step">
+                        <div class="rail"><span class="bullet">2</span></div>
+                        <article class="step-card">
+                            <h3>Підбір підрозділів і посад</h3>
+                            <p>Порівняємо кілька бригад, пояснюємо їх завдання та умови служби. Ви самі обираєте, куди хочете йти.</p>
+                        </article>
+                    </li>
+                    <li class="step">
+                        <div class="rail"><span class="bullet">3</span></div>
+                        <article class="step-card">
+                            <h3>Знайомство з військовою частиною та командиром</h3>
+                            <p>Організовуємо звʼязок із представниками частини, щоб ви могли уточнити всі деталі та впевнитися у виборі.</p>
+                        </article>
+                    </li>
+                    <li class="step">
+                        <div class="rail"><span class="bullet">4</span></div>
+                        <article class="step-card">
+                            <h3>Підготовка документів і супровід на ВЛК</h3>
+                            <p>Допомагаємо з оформленням документів і супроводжуємо на медкомісії — швидко та без зайвих труднощів.</p>
+                        </article>
+                    </li>
+                    <li class="step">
+                        <div class="rail"><span class="bullet">5</span></div>
+                        <article class="step-card">
+                            <h3>Узгодження посади та остаточне рішення</h3>
+                            <p>Ви остаточно визначаєтесь із посадою. Ми контролюємо, щоб ваш вибір був зафіксований і не змінювався.</p>
+                        </article>
+                    </li>
+                    <li class="step">
+                        <div class="rail"><span class="bullet">6</span></div>
+                        <article class="step-card">
+                            <h3>Відправка до місця проходження служби</h3>
+                            <p>Після відбору та документів — 45-денна базова підготовка у навчальному центрі, далі — до обраної частини.</p>
+                        </article>
+                    </li>
+                </ol>
+            </div>
 
-    <section id="stages" class="section">
-        <div class="container">
-
-            <div class="stages-container">
-
-                <div class="stages-image-wrapper">
-                    <img src="static/ukrarmy.png" alt="Військовий ЗСУ" class="stages-image">
-                    <a href="#contact" class="btn btn-primary btn-large stages-image-button">Подати заявку</a>
-                </div>
-
-                <div class="stages-content-wrapper">
-                    <h2 class="stages-title">Ваш шлях до контракту</h2>
-                    <p class="stages-subtitle">Ми супроводжуємо на всіх етапах – від першої консультації до підписання контракту в обраній військовій частині.</p>
-
-                    <ul class="stages-list">
-
-                        <li class="stage-item">
-                            <div class="stage-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                            </div>
-                            <div class="stage-text">
-                                <h3>Звернення та перша консультація</h3>
-                                <p>Ми уточнимо ваші побажання, досвід, мотивацію та розповідаємо про можливі напрями служби.</p>
-                            </div>
-                        </li>
-
-                        <li class="stage-item">
-                            <div class="stage-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                            </div>
-                            <div class="stage-text">
-                                <h3>Підбір підрозділів і посад</h3>
-                                <p>Порівняємо кілька бригад, пояснюємо їх завдання та умови служби. Ви самі обираєте, куди хочете йти.</p>
-                            </div>
-                        </li>
-
-                        <li class="stage-item">
-                            <div class="stage-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                            </div>
-                            <div class="stage-text">
-                                <h3>Знайомство з військовою частиною та командиром</h3>
-                                <p>Ми організовуємо зв'язок з представниками військової частини, щоб ви могли уточнити всі деталі та впевнитися у виборі.</p>
-                            </div>
-                        </li>
-
-                        <li class="stage-item">
-                            <div class="stage-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                            </div>
-                            <div class="stage-text">
-                                <h3>Підготовка документів і супровід на ВЛК</h3>
-                                <p>Допомагаємо з оформленням документів і супроводжуємо на медичній комісії, щоб усі етапи пройшли швидко та без зайвих труднощів.</p>
-                            </div>
-                        </li>
-
-                        <li class="stage-item">
-                            <div class="stage-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                            </div>
-                            <div class="stage-text">
-                                <h3>Узгодження посади та остаточне рішення</h3>
-                                <p>Ви остаточно визначаєтесь із посадою в обраній частині. Ми контролюємо, щоб ваш вибір був зафіксований і не змінювався.</p>
-                            </div>
-                        </li>
-
-                        <li class="stage-item">
-                            <div class="stage-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                            </div>
-                            <div class="stage-text">
-                                <h3>Відправка до місця проходження служби</h3>
-                                <p>Після проходження відбору та оформлення документів ви проходите 45-денну базову підготовку при навчальному центрі, а далі вирушаєте до обраної військової частини.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+            <!-- Права колонка: фото -->
+            <div class="path-right">
+                <img src="static/solider.png" alt="Військовий шлях" class="path-image">
             </div>
         </div>
     </section>
 
 
-    <!-- ==== Рекрутинг vs Мобілізація ==== -->
-    <section id="compare" class="section compare light bg-camouflage-green">
+
+
+
+
+
+
+    <!-- ==== Рекрутинг vs Мобілізація (Neo) ==== -->
+    <section id="compare" class="section compare neo">
         <div class="container">
-            <h2 class="compare-title">Чим рекрутинг відрізняється від мобілізації</h2>
+            <h2 class="compare-title">
+                Чим рекрутинг відрізняється від мобілізації
+                <span class="title-underline" aria-hidden="true"></span>
+            </h2>
 
             <div class="compare-cols">
                 <!-- Рекрутинг -->
-                <div class="compare-col">
+                <div class="compare-col recruit">
                     <h3 class="compare-col-title">Рекрутинг</h3>
                     <ul class="compare-list">
                         <li class="compare-item">
-                            <span class="ico-check" aria-hidden="true"></span>
+                            <span class="ico-check"></span>
                             <div><strong>Добровільно</strong><br>Людина самостійно звертається та ухвалює рішення про службу.</div>
                         </li>
                         <li class="compare-item">
@@ -256,23 +292,23 @@
                 </div>
 
                 <!-- Мобілізація -->
-                <div class="compare-col">
+                <div class="compare-col mobilization">
                     <h3 class="compare-col-title">Мобілізація</h3>
                     <ul class="compare-list">
                         <li class="compare-item">
-                            <span class="ico-check"></span>
+                            <span class="ico-check is-negative"></span>
                             <div><strong>Не добровільно</strong><br>Рішення ухвалюється державою у межах законодавства.</div>
                         </li>
                         <li class="compare-item">
-                            <span class="ico-check"></span>
+                            <span class="ico-check is-negative"></span>
                             <div><strong>Без вибору підрозділу</strong><br>Направлення відбувається відповідно до потреб ЗСУ.</div>
                         </li>
                         <li class="compare-item">
-                            <span class="ico-check"></span>
+                            <span class="ico-check is-negative"></span>
                             <div><strong>Інший порядок ВЛК та документів</strong><br>Процес проходить за мобілізаційною процедурою.</div>
                         </li>
                         <li class="compare-item">
-                            <span class="ico-check"></span>
+                            <span class="ico-check is-negative"></span>
                             <div><strong>Обмежена інформація</strong><br>Людину направляють одразу за потребами оборони.</div>
                         </li>
                     </ul>
@@ -288,48 +324,77 @@
 
 
 
+
     <!-- ==== Відгуки / Testimonial Hero ==== -->
-    <section id="reviews" class="section testimonials">
+    <section id="reviews" class="testi-section">
         <div class="container">
             <h2 class="testi-title">Що кажуть про нашу роботу</h2>
             <p class="testi-subtitle">
-                Join thousands of satisfied customers who have transformed their banking experience
-                with Banko.
+                Join thousands of satisfied customers who have transformed their banking experience with Banko.
             </p>
 
-            <div class="testi-grid">
-                <!-- item 1 -->
-                <figure class="testi-item">
-                    <div class="testi-quote">“</div>
-                    <blockquote class="testi-text">
-                        Отримали вмотивованих кандидатів, які чітко розуміли умови служби.
-                        Працюємо швидко та результативно.
-                    </blockquote>
-                    <img class="testi-badge" src="static/image.png" alt="Нашивка">
-                    <figcaption class="testi-caption">Командир батальйону</figcaption>
-                </figure>
+            <div class="testi-slider" aria-roledescription="carousel">
+                <button class="nav prev" aria-label="Попередній відгук">←</button>
+                <button class="nav next" aria-label="Наступний відгук">→</button>
 
-                <!-- item 2 -->
-                <figure class="testi-item">
-                    <div class="testi-quote">“</div>
-                    <blockquote class="testi-text">
-                        Головне — чесно сказали, які умови в частині. Підтримували на всіх етапах.
-                        Жодних сюрпризів при підписанні.
-                    </blockquote>
-                    <img class="testi-badge" src="static/image.png" alt="Нашивка">
-                    <figcaption class="testi-caption">Командир батальйону</figcaption>
-                </figure>
+                <div class="viewport">
+                    <div class="track">
+                        <!-- === Slides (додавай скільки треба) === -->
+                        <figure class="slide">
+                            <div class="card">
+                                <div class="badge-num">01</div>
+                                <div class="quote-mark">“</div>
+                                <blockquote class="text">
+                                    Отримали вмотивованих кандидатів, які чітко розуміли умови служби.
+                                    Працюємо швидко та результативно.
+                                </blockquote>
+                                <img class="emblem" src="static/image.png" alt="Нашивка">
+                                <figcaption class="caption">Командир батальйону</figcaption>
+                            </div>
+                        </figure>
 
-                <!-- item 3 -->
-                <figure class="testi-item">
-                    <div class="testi-quote">“</div>
-                    <blockquote class="testi-text">
-                        Страшно було йти в ТЦК самому. Тут усе пояснили та допомогли зв’язатися
-                        з командиром. Підписав контракт у тій бригаді, яку сам обрав.
-                    </blockquote>
-                    <img class="testi-badge" src="static/image.png" alt="Нашивка">
-                    <figcaption class="testi-caption">Командир батальйону</figcaption>
-                </figure>
+                        <figure class="slide">
+                            <div class="card">
+                                <div class="badge-num">02</div>
+                                <div class="quote-mark">“</div>
+                                <blockquote class="text">
+                                    Головне — чесно сказали, які умови в частині. Підтримували на всіх етапах.
+                                    Жодних сюрпризів при підписанні.
+                                </blockquote>
+                                <img class="emblem" src="static/image.png" alt="Нашивка">
+                                <figcaption class="caption">Командир батальйону</figcaption>
+                            </div>
+                        </figure>
+
+                        <figure class="slide">
+                            <div class="card">
+                                <div class="badge-num">03</div>
+                                <div class="quote-mark">“</div>
+                                <blockquote class="text">
+                                    Страшно було йти в ТЦК самому. Тут усе пояснили та допомогли зв’язатися з командиром.
+                                    Підписав контракт у тій бригаді, яку сам обрав.
+                                </blockquote>
+                                <img class="emblem" src="static/image.png" alt="Нашивка">
+                                <figcaption class="caption">Командир батальйону</figcaption>
+                            </div>
+                        </figure>
+                        <figure class="slide">
+                            <div class="card">
+                                <div class="badge-num">04</div>
+                                <div class="quote-mark">“</div>
+                                <blockquote class="text">
+                                    Страшно було йти в ТЦК самому. Тут усе пояснили та допомогли зв’язатися з командиром.
+                                    Підписав контракт у тій бригаді, яку сам обрав.
+                                </blockquote>
+                                <img class="emblem" src="static/image.png" alt="Нашивка">
+                                <figcaption class="caption">Командир батальйону</figcaption>
+                            </div>
+                        </figure>
+                        <!-- === /Slides === -->
+                    </div>
+                </div>
+
+                <div class="dots" aria-label="Індикатор слайдів"></div>
             </div>
         </div>
     </section>

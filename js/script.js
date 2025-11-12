@@ -306,3 +306,395 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+(() => {
+    const slider   = document.querySelector('.testi-slider');
+    if (!slider) return;
+
+    const viewport = slider.querySelector('.viewport');
+    const track    = slider.querySelector('.track');
+    const prevBtn  = slider.querySelector('.nav.prev');
+    const nextBtn  = slider.querySelector('.nav.next');
+    const dotsWrap = slider.querySelector('.dots');
+    viewport.style.touchAction = 'pan-y';
+    // Вихідні (оригінальні) слайди
+    let baseSlides = Array.from(track.querySelectorAll('.slide'));
+
+    // Стан
+    let perView = 3;                 // к-ть карток на екрані
+    let gap = 24;                    // (синхро з CSS)
+    let slideW = 0;                  // розрахована ширина слайда
+    let index = 0;                   // індекс у «віртуальному» списку (без клонів)
+    let allow = true;                // захист від дабл-кліків
+
+    // === Допоміжне: однакова висота карток ==================================
+    function normalizeHeights(){
+        // скидаємо тимчасово висоту, щоб виміряти натуральну
+        track.querySelectorAll('.card').forEach(c => c.style.height = 'auto');
+
+        // беремо тільки ОРИГІНАЛЬНІ (не clone) елементи
+        const cards = Array.from(track.children)
+            .filter(n => !n.classList.contains('clone'))
+            .map(n => n.querySelector('.card'));
+
+        const maxH = Math.max(...cards.map(c => c.offsetHeight));
+        // виставляємо CSS-змінну на слайдері
+        slider.style.setProperty('--card-h', maxH + 'px');
+
+        // повертаємо контроль висоти назад до змінної (про всяк випадок)
+        track.querySelectorAll('.card').forEach(c => c.style.height = 'var(--card-h)');
+    }
+    // ========================================================================
+
+    // Клонування країв (для справжньої «нескінченності»)
+    function buildClones(){
+        // прибрати старі клони
+        track.querySelectorAll('.slide.clone').forEach(n => n.remove());
+
+        // клонувати стільки, скільки видно на екрані
+        const head = baseSlides.slice(0, perView);
+        const tail = baseSlides.slice(-perView);
+
+        // prepend кінцеві
+        tail.forEach(s => {
+            const c = s.cloneNode(true);
+            c.classList.add('clone');
+            track.insertBefore(c, track.firstChild);
+        });
+        // append початкові
+        head.forEach(s => {
+            const c = s.cloneNode(true);
+            c.classList.add('clone');
+            track.appendChild(c);
+        });
+    }
+
+    // Розрахунок к-сті карток на екрані
+    function computePerView(){
+        const w = viewport.clientWidth;
+        if (w < 700)  return 1;
+        if (w < 1024) return 2;
+        return 3;
+    }
+
+    // Встановити ширини
+    function setWidths(){
+        const totalGap = gap * (perView - 1);
+        slideW = (viewport.clientWidth - totalGap) / perView;
+
+        // усім слайдам однакову основу
+        track.querySelectorAll('.slide').forEach(s => {
+            s.style.flex = `0 0 ${slideW}px`;
+        });
+        track.style.gap = gap + 'px';
+    }
+
+    // Поточне зсування треку
+    function currentOffset(){
+        const clonesLeft = perView; // стільки клонів стоїть ліворуч
+        return -((clonesLeft + index) * (slideW + gap));
+    }
+
+    // Миттєвий стрибок без анімації (для «перемотки» після краю)
+    function jumpNoAnim(newIndex){
+        track.style.transition = 'none';
+        index = newIndex;
+        track.style.transform = `translate3d(${currentOffset()}px,0,0)`;
+        // примусове перерахування стилів
+        void track.offsetHeight;
+        track.style.transition = 'transform .5s ease-in-out';
+    }
+
+    // Крок на 1 слайд
+    function go(dir){
+        if (!allow) return;
+        allow = false;
+        index += dir;
+        track.style.transform = `translate3d(${currentOffset()}px,0,0)`;
+    }
+
+    // Побудова крапок
+    function buildDots(){
+        dotsWrap.innerHTML = '';
+        baseSlides.forEach((_, i) => {
+            const b = document.createElement('button');
+            b.setAttribute('aria-label', `Перейти до слайду ${i+1}`);
+            b.addEventListener('click', () => { jumpNoAnim(i); setActiveDot(i); });
+            dotsWrap.appendChild(b);
+        });
+    }
+    function setActiveDot(i){
+        const len = baseSlides.length;
+        const idx = ((i % len) + len) % len;
+        dotsWrap.querySelectorAll('button').forEach((d, k) => {
+            d.classList.toggle('active', k === idx);
+        });
+    }
+
+    // Повна перебудова (при старті та ресайзі)
+    function rebuild(){
+        perView = computePerView();
+
+        // Перечитати базові слайди (раптом ти додав/прибрав нові у DOM)
+        baseSlides = Array.from(track.querySelectorAll('.slide')).filter(n => !n.classList.contains('clone'));
+
+        buildClones();
+        setWidths();
+        jumpNoAnim(0);
+        buildDots();
+        setActiveDot(0);
+        normalizeHeights(); // вирівняти висоту після побудови
+    }
+
+    // Події
+    track.addEventListener('transitionend', () => {
+        const len = baseSlides.length;
+        if (index >= len){ jumpNoAnim(index - len); }
+        if (index < 0){   jumpNoAnim(index + len); }
+        setActiveDot(index);
+        allow = true;
+    });
+
+    prevBtn.addEventListener('click', () => go(-1));
+    nextBtn.addEventListener('click', () => go(+1));
+
+    // Клавіша навігації
+    slider.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') go(+1);
+        if (e.key === 'ArrowLeft')  go(-1);
+    });
+    slider.setAttribute('tabindex','0');
+
+    // Drag / swipe
+    let startX = 0, dragging = false, startTx = 0;
+    viewport.addEventListener('pointerdown', (e) => {
+        dragging = true; startX = e.clientX; startTx = currentOffset();
+        track.style.transition = 'none';
+        viewport.setPointerCapture(e.pointerId);
+    });
+    viewport.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        const dx = e.clientX - startX;
+        track.style.transform = `translate3d(${startTx + dx}px,0,0)`;
+    });
+    const endDrag = (e) => {
+        if (!dragging) return; dragging = false;
+        const dx = e.clientX - startX;
+        track.style.transition = 'transform .5s ease-in-out';
+        const threshold = Math.max(40, slideW * 0.18);
+        if (dx <= -threshold) go(+1);
+        else if (dx >= threshold) go(-1);
+        else track.style.transform = `translate3d(${currentOffset()}px,0,0)`;
+    };
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+    viewport.addEventListener('pointerleave', endDrag);
+
+    // Ресайз та підвантаження зображень
+    window.addEventListener('resize', rebuild);
+    slider.querySelectorAll('img').forEach(img => {
+        if (!img.complete) img.addEventListener('load', normalizeHeights);
+    });
+
+    // Старт
+    rebuild();
+    // запасний вирівнювач після першого кадру
+    setTimeout(normalizeHeights, 0);
+})();
+
+(() => {
+    const sec = document.querySelector('.compare.neo');
+    if (!sec) return;
+
+    // простий спостерігач: коли секція у вʼюпорті — додаємо .in-view
+    const io = new IntersectionObserver(([e])=>{
+        if (e.isIntersecting){ sec.classList.add('in-view'); io.disconnect(); }
+    }, { root:null, threshold:.18 });
+    io.observe(sec);
+
+    // виставляємо індекси для "стагера"
+    sec.querySelectorAll('.compare-col').forEach(col=>{
+        col.querySelectorAll('.compare-item').forEach((li,i)=> li.style.setProperty('--i', i));
+    });
+})();
+
+(() => {
+    const section = document.getElementById('path');
+    const list    = document.getElementById('pathSteps');
+    if (!section || !list) return;
+
+    const steps = Array.from(list.querySelectorAll('.step'));
+    if (!steps.length) return;
+
+    // ==== налаштування ====
+    const HEADER_OFFSET = 0;    // якщо є фіксований хедер — вкажи його висоту (px)
+    const AUTO_MS = 520;        // тривалість автоскролу (мс)
+    const EDGE_FREE = 24;       // зона на краях секції, де НЕ перехоплюємо колесо (px)
+    const SWIPE_MIN = 30;       // мін. вертикальний рух для свайпа (px)
+
+    // ==== утиліти ====
+    const docY = () => window.scrollY || window.pageYOffset || 0;
+    const vwH  = () => window.innerHeight || document.documentElement.clientHeight;
+
+    const absTop = (el) => {
+        let y = 0, n = el;
+        while (n) { y += n.offsetTop; n = n.offsetParent; }
+        return y;
+    };
+
+    const secTop    = () => absTop(section);
+    const secBottom = () => secTop() + section.offsetHeight;
+
+    const inSectionViewport = () => {
+        const top = secTop(), bot = secBottom();
+        const vTop = docY(), vBot = vTop + vwH();
+        return bot > vTop && top < vBot;
+    };
+
+    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+    const stepCenterY = (el) => absTop(el) + el.offsetHeight/2;
+
+    const viewportMidY = () => docY() + vwH()/2 - HEADER_OFFSET/2;
+
+    const pickNearest = () => {
+        const mid = viewportMidY();
+        let best = Infinity, bestEl = steps[0];
+        for (const s of steps){
+            const d = Math.abs(stepCenterY(s) - mid);
+            if (d < best){ best = d; bestEl = s; }
+        }
+        return bestEl;
+    };
+
+    const indexOfStep = (el) => steps.indexOf(el);
+
+    const setActive = (el) => {
+        if (!el) return;
+        if (el.classList.contains('is-active')) return;
+        steps.forEach(s => s.classList.remove('is-active'));
+        el.classList.add('is-active');
+    };
+
+    const scrollToStep = (el) => {
+        if (!el) return;
+        const target = stepCenterY(el) - vwH()/2 - HEADER_OFFSET/2;
+        const maxY = Math.max(0, document.documentElement.scrollHeight - vwH());
+        const top  = clamp(target, 0, maxY);
+        isAuto = true;
+        window.scrollTo({ top, behavior: 'smooth' });
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(() => { isAuto = false; }, AUTO_MS);
+    };
+
+    // присвоїмо стабільні id/ data-idx (як просив)
+    steps.forEach((s, i) => {
+        if (!s.id) s.id = `path-step-${i+1}`;
+        s.dataset.idx = String(i);
+    });
+
+    // ==== керування ====
+    let isAuto = false;
+    let autoTimer = null;
+    let tick = false;
+
+    // активуємо найближчий під час скролу/ресайзу (без автоскролу)
+    const onScrollPassive = () => {
+        if (!inSectionViewport()) return;
+        if (tick) return;
+        tick = true;
+        requestAnimationFrame(() => {
+            const nearest = pickNearest();
+            setActive(nearest);
+            tick = false;
+        });
+    };
+
+    // «крокай» до сусіднього етапу (+1/-1)
+    const stepBy = (dir) => {
+        const current = pickNearest();
+        let idx = indexOfStep(current);
+        const nextIdx = clamp(idx + dir, 0, steps.length - 1);
+        if (nextIdx === idx) return false;
+        scrollToStep(steps[nextIdx]);
+        return true;
+    };
+
+    // чи ми на краях секції (даємо вийти вгору/вниз)
+    const atTopEdge = () => docY() <= secTop() + EDGE_FREE;
+    const atBotEdge = () => docY() + vwH() >= secBottom() - EDGE_FREE;
+
+    // перехоплюємо колесо тільки всередині секції
+    const onWheel = (e) => {
+        if (!inSectionViewport()) return;       // поза секцією — нічого не чіпаємо
+        if (isAuto) { e.preventDefault(); return; }
+
+        const dy = e.deltaY;
+        if (dy > 0) {
+            // вниз
+            if (atBotEdge()) return;             // дати піти нижче секції
+            e.preventDefault();
+            stepBy(+1);
+        } else if (dy < 0) {
+            // вгору
+            if (atTopEdge()) return;             // дати вийти вище секції
+            e.preventDefault();
+            stepBy(-1);
+        }
+    };
+
+    // тач-свайпи
+    let touchStartY = null;
+    const onTouchStart = (e) => { if (!inSectionViewport()) return; touchStartY = e.touches[0].clientY; };
+    const onTouchEnd   = (e) => {
+        if (!inSectionViewport() || touchStartY == null || isAuto) { touchStartY = null; return; }
+        const endY = (e.changedTouches && e.changedTouches[0]?.clientY) ?? null;
+        if (endY == null) { touchStartY = null; return; }
+        const dy = endY - touchStartY;
+        if (Math.abs(dy) < SWIPE_MIN) { touchStartY = null; return; }
+
+        if (dy < 0) { // свайп вгору => рух вниз
+            if (!atBotEdge()) stepBy(+1);
+        } else {      // свайп вниз => рух вгору
+            if (!atTopEdge()) stepBy(-1);
+        }
+        touchStartY = null;
+    };
+
+    // клавіатура
+    const onKey = (e) => {
+        if (!inSectionViewport()) return;
+        if (isAuto) { e.preventDefault(); return; }
+        if (['ArrowDown','PageDown',' '].includes(e.key)) {
+            if (atBotEdge()) return; e.preventDefault(); stepBy(+1);
+        } else if (['ArrowUp','PageUp'].includes(e.key)) {
+            if (atTopEdge()) return; e.preventDefault(); stepBy(-1);
+        }
+    };
+
+    // перший захід у секцію — підхопити найближчий і «пригвинтити» до центру м’яко
+    let entered = false;
+    const onScrollEnterCheck = () => {
+        if (!entered && inSectionViewport()) {
+            entered = true;
+            const target = pickNearest();
+            setActive(target);
+            scrollToStep(target);
+        }
+    };
+
+    // слухачі
+    window.addEventListener('scroll', onScrollPassive, { passive: true });
+    window.addEventListener('scroll', onScrollEnterCheck, { passive: true });
+    window.addEventListener('resize', onScrollPassive, { passive: true });
+
+    // важливо: колесо НЕ пасивне — щоб можна було preventDefault
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.addEventListener('keydown', onKey);
+
+    // старт
+    setActive(pickNearest());
+    // невеличка пауза, щоб шрифти/висоти устаканились
+    setTimeout(() => { onScrollEnterCheck(); onScrollPassive(); }, 0);
+})();
