@@ -694,3 +694,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // невеличка пауза, щоб шрифти/висоти устаканились
     setTimeout(() => { onScrollEnterCheck(); onScrollPassive(); }, 0);
 })();
+
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const id = this.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        const headerOffset = 80; // висота фіксованого хедера
+        const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - headerOffset;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+        });
+    });
+});

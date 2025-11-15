@@ -32,7 +32,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    /*scroll-behavior: smooth;*/
     font-size: 16px;
 }
 
@@ -567,6 +567,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     width: 72%;
     opacity: 0.8;
     /*mix-blend-mode:  ;*/
+    filter: drop-shadow( 0 0 20px rgba(255, 77, 0, 0.5));
 
 }
 @media (max-width: 768px) {
@@ -581,6 +582,9 @@ h4 { font-size: 1.25rem; } /* 20px */
         position: relative;
         left: -30%;
         width: 190%;
+    }
+    .hero-map {
+        display: none;
     }
 }
 /* Мала наліпка на фото */
@@ -1584,7 +1588,14 @@ h4 { font-size: 1.25rem; } /* 20px */
 .testi-slider .nav.next{
     left:102px;
 }
+@media (max-width: 768px) {
+    .testi-slider .nav {
+        width: 40px;
+        height: 40px;
+    }
 
+    
+}
 /* Вікно слайдера */
 .viewport{
     overflow:hidden;
