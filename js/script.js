@@ -316,51 +316,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn  = slider.querySelector('.nav.next');
     const dotsWrap = slider.querySelector('.dots');
     viewport.style.touchAction = 'pan-y';
-    // Вихідні (оригінальні) слайди
+
+    // Вихідні слайди
     let baseSlides = Array.from(track.querySelectorAll('.slide'));
 
     // Стан
-    let perView = 3;                 // к-ть карток на екрані
-    let gap = 24;                    // (синхро з CSS)
-    let slideW = 0;                  // розрахована ширина слайда
-    let index = 0;                   // індекс у «віртуальному» списку (без клонів)
-    let allow = true;                // захист від дабл-кліків
+    let perView = 3;
+    let gap = 24;
+    let slideW = 0;
+    let index = 0;
+    let allow = true;
 
-    // === Допоміжне: однакова висота карток ==================================
+    // ---- доп. функція: взяти ширину картки з CSS-перемінної ----
+    function readSlideWidth(){
+        const cssVal = getComputedStyle(slider).getPropertyValue('--card-w').trim();
+        if (cssVal.endsWith('px')) {
+            const num = parseFloat(cssVal);
+            if (!Number.isNaN(num)) return num;
+        }
+        const first = track.querySelector('.slide');
+        return first ? first.getBoundingClientRect().width : 320;
+    }
+
+    // === Однакова висота карток ==================================
     function normalizeHeights(){
-        // скидаємо тимчасово висоту, щоб виміряти натуральну
         track.querySelectorAll('.card').forEach(c => c.style.height = 'auto');
 
-        // беремо тільки ОРИГІНАЛЬНІ (не clone) елементи
         const cards = Array.from(track.children)
             .filter(n => !n.classList.contains('clone'))
             .map(n => n.querySelector('.card'));
 
         const maxH = Math.max(...cards.map(c => c.offsetHeight));
-        // виставляємо CSS-змінну на слайдері
         slider.style.setProperty('--card-h', maxH + 'px');
-
-        // повертаємо контроль висоти назад до змінної (про всяк випадок)
         track.querySelectorAll('.card').forEach(c => c.style.height = 'var(--card-h)');
     }
-    // ========================================================================
 
-    // Клонування країв (для справжньої «нескінченності»)
+    // Клонування країв
     function buildClones(){
-        // прибрати старі клони
         track.querySelectorAll('.slide.clone').forEach(n => n.remove());
 
-        // клонувати стільки, скільки видно на екрані
         const head = baseSlides.slice(0, perView);
         const tail = baseSlides.slice(-perView);
 
-        // prepend кінцеві
         tail.forEach(s => {
             const c = s.cloneNode(true);
             c.classList.add('clone');
             track.insertBefore(c, track.firstChild);
         });
-        // append початкові
         head.forEach(s => {
             const c = s.cloneNode(true);
             c.classList.add('clone');
@@ -368,20 +370,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Розрахунок к-сті карток на екрані
+    // Розрахунок к-сті карток на екрані з фіксованою шириною
     function computePerView(){
+        slideW = readSlideWidth();
         const w = viewport.clientWidth;
-        if (w < 700)  return 1;
-        if (w < 1024) return 2;
-        return 3;
+        const count = Math.floor((w + gap) / (slideW + gap));
+        return Math.max(1, count);
     }
 
-    // Встановити ширини
+    // Встановити ширини (просто фіксована ширина для всіх)
     function setWidths(){
-        const totalGap = gap * (perView - 1);
-        slideW = (viewport.clientWidth - totalGap) / perView;
-
-        // усім слайдам однакову основу
+        slideW = readSlideWidth();
         track.querySelectorAll('.slide').forEach(s => {
             s.style.flex = `0 0 ${slideW}px`;
         });
@@ -390,16 +389,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Поточне зсування треку
     function currentOffset(){
-        const clonesLeft = perView; // стільки клонів стоїть ліворуч
+        const clonesLeft = perView;
         return -((clonesLeft + index) * (slideW + gap));
     }
 
-    // Миттєвий стрибок без анімації (для «перемотки» після краю)
+    // Миттєвий стрибок без анімації
     function jumpNoAnim(newIndex){
         track.style.transition = 'none';
         index = newIndex;
         track.style.transform = `translate3d(${currentOffset()}px,0,0)`;
-        // примусове перерахування стилів
         void track.offsetHeight;
         track.style.transition = 'transform .5s ease-in-out';
     }
@@ -412,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
         track.style.transform = `translate3d(${currentOffset()}px,0,0)`;
     }
 
-    // Побудова крапок
+    // Dots
     function buildDots(){
         dotsWrap.innerHTML = '';
         baseSlides.forEach((_, i) => {
@@ -430,19 +428,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Повна перебудова (при старті та ресайзі)
+    // Повна перебудова
     function rebuild(){
-        perView = computePerView();
-
-        // Перечитати базові слайди (раптом ти додав/прибрав нові у DOM)
+        // перечитати базові слайди
         baseSlides = Array.from(track.querySelectorAll('.slide')).filter(n => !n.classList.contains('clone'));
 
+        perView = computePerView();   // скільки карток влазить по ширині
         buildClones();
         setWidths();
         jumpNoAnim(0);
         buildDots();
         setActiveDot(0);
-        normalizeHeights(); // вирівняти висоту після побудови
+        normalizeHeights();
     }
 
     // Події
@@ -457,7 +454,6 @@ document.addEventListener('DOMContentLoaded', () => {
     prevBtn.addEventListener('click', () => go(-1));
     nextBtn.addEventListener('click', () => go(+1));
 
-    // Клавіша навігації
     slider.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') go(+1);
         if (e.key === 'ArrowLeft')  go(-1);
@@ -489,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
     viewport.addEventListener('pointercancel', endDrag);
     viewport.addEventListener('pointerleave', endDrag);
 
-    // Ресайз та підвантаження зображень
+    // Ресайз та картинки
     window.addEventListener('resize', rebuild);
     slider.querySelectorAll('img').forEach(img => {
         if (!img.complete) img.addEventListener('load', normalizeHeights);
@@ -497,7 +493,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Старт
     rebuild();
-    // запасний вирівнювач після першого кадру
     setTimeout(normalizeHeights, 0);
 })();
 

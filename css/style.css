@@ -6,7 +6,7 @@
 /* ==== Змінні кольорів (Палітра) ==== */
 :root {
     --deep-green: #2E3D2F;
-    --camouflage-green: #5c6c51;
+    --camouflage-green: #516343;
     --sandstone: #C2B280;
     --khaki-light: #E6D8AD;
     --signal-orange: #D97700;
@@ -45,16 +45,17 @@ body {
     -moz-osx-font-smoothing: grayscale;
     position: relative;
     z-index: 0;
+    overflow-x: hidden;
 }
 
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    background-image: url("/static/bg2 trnsprnt.png");
+    background-image: url("/static/patern_bg2.png");
     background-repeat: repeat;
-    background-size: 50%;
-    opacity: 0.05; /* ← зменшуй або збільшуй */
+    background-size: 50%;background-position-y: 40px;
+    opacity: 0.4; /* ← зменшуй або збільшуй */
     z-index: -1;
     pointer-events: none;
 }
@@ -373,8 +374,21 @@ h4 { font-size: 1.25rem; } /* 20px */
     align-items: center;
     padding: clamp(1rem, 3vw, 2rem) 0 0 0;
     overflow: clip; /* акуратні тіні/анім */
+    /*background-color: var(--deep-green);*/
 }
-
+/*.hero::before {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    inset: 0;*/
+/*    background-image: url("/static/PATERN.png");*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: 96%;*/
+/*    background-position: center;*/
+/*    background-position-y: -60px;*/
+/*    opacity: 0.5;*/
+/*    z-index: 0;*/
+/*    pointer-events: none;*/
+/*}*/
 @media (max-width: 768px) {
     .hero {
         min-height: calc(100vh - 4rem);
@@ -437,6 +451,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     }
 }
 .hero-title {
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     line-height: 1.15;
     margin: 0 0 1rem 0;
     font-size: clamp(1.9rem, 4.2vw, 3.9rem);
@@ -452,8 +467,8 @@ h4 { font-size: 1.25rem; } /* 20px */
     position: absolute;
     inset: 65% -4% -8% -4%; /* підкреслення-«капля» */
     border-radius: 999px;
-    background: currentColor;         /* не чіпаємо палітру — використовуємо поточний колір */
-    opacity: .14;                     /* лише акцент */
+    /*background: currentColor;         !* не чіпаємо палітру — використовуємо поточний колір *!*/
+    /*opacity: .14;                     !* лише акцент *!*/
     z-index: -1;
 }
 
@@ -523,6 +538,36 @@ h4 { font-size: 1.25rem; } /* 20px */
     opacity: 0;
     transform: scale(1.02);
     animation: heroFade .8s ease .1s forwards;
+}
+/*.hero-frame::before {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    inset: 0;*/
+/*    background-image: url("/static/map.png");*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: 100%;*/
+/*    background-position-y: 60px;*/
+/*    background-position: center;*/
+
+/*    !*background-position-x: -20px;*!*/
+/*    opacity: 1; !* ← зменшуй або збільшуй *!*/
+/*    z-index: -1;*/
+/*    pointer-events: none;*/
+
+/*}*/
+.hero-map {
+    position: absolute;
+    top: 50%;
+    left: 62%;
+    transform: translateX(-50%)translateY(-50%);
+    width: 100%;
+    /*mix-blend-mode:  ;*/
+}
+.hero-map img {
+    width: 72%;
+    opacity: 0.8;
+    /*mix-blend-mode:  ;*/
+
 }
 @media (max-width: 768px) {
     img {
@@ -1068,7 +1113,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     .step.is-active .step-card{ transform: scale(1.06); }
 }
 .path-section {
-    background: var(--deep-green);
+    /*background: var(--deep-green);*/
     color: var(--text-color);
     padding: 60px 0;
 }
@@ -1461,7 +1506,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 
 
 
-/* ==== Testimonials (Military loop slider) - FIXED ==== */
+/* ==== Testimonials (Military loop slider) FULL-WIDTH ==== */
 .testi-section{
     background: var(--deep-green);
     color: var(--text-color);
@@ -1469,7 +1514,12 @@ h4 { font-size: 1.25rem; } /* 20px */
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
 }
-.testi-section .container{ max-width:1300px; margin:0 auto; padding:0 24px; }
+
+.testi-section .container{
+    max-width:1300px;
+    margin:0 auto;
+    padding:0 24px;
+}
 
 .testi-title{
     text-align:center; color:var(--text-color-white);
@@ -1481,19 +1531,46 @@ h4 { font-size: 1.25rem; } /* 20px */
     margin:0 auto 28px; line-height:1.6; color:var(--khaki-light);
 }
 
-/* Slider layout */
+/* Slider layout: РОЗТЯГУЄМО НА ВСЮ ШИРИНУ В'ЮПОРТУ */
 .testi-slider{
     position:relative;
-    width:min(90vw, 1300px);           /* 90% ширини екрана */
-    margin-inline:auto;                 /* центрування */
+    width:100vw;
+    margin-left:50%;
+    transform:translateX(-50%);
+    padding-inline:24px;
+    box-sizing:border-box;
+
+    /* ↑ більше місця під фото зверху + текст знизу */
+    --card-w: 420px;   /* була ~340 */
+    --card-h: 480px;   /* була ~360 */
+}
+@media (max-width:1024px){
+    .testi-slider{
+        --card-w: 360px;
+        --card-h: 430px;
+    }
+}
+@media (max-width:700px){
+    .testi-slider{
+        --card-w: 300px;
+        --card-h: 380px;
+    }
 }
 
-/* Кнопки навігації */
+
+/* Кнопки навігації привʼязані до краю слайдера */
 .testi-slider .nav{
-    position:absolute; top:-52px; width:40px; height:40px; border-radius:12px;
-    background:transparent; color:var(--khaki-light);
+    position:absolute;
+    top:-70px;
+    width:70px;
+    height:70px;
+    border-radius:12px;
+    background:transparent;
+    color:var(--khaki-light);
     border:1px solid color-mix(in srgb, var(--sandstone) 40%, transparent);
-    display:grid; place-items:center; cursor:pointer;
+    display:grid;
+    place-items:center;
+    cursor:pointer;
     transition: background .25s, border-color .25s, transform .25s;
 }
 .testi-slider .nav:hover{
@@ -1501,18 +1578,21 @@ h4 { font-size: 1.25rem; } /* 20px */
     border-color:var(--sandstone);
     transform: translateY(-1px);
 }
-.testi-slider .nav.prev{ left:0; }
-.testi-slider .nav.next{ left:52px; }
-
-/* Вікно слайдера:
-   тримаємо overflow:hidden, але даємо вертикальний "буфер",
-   щоб ховер підйом не обрізався */
-.viewport{
-    overflow:hidden;
-    padding-block:12px;     /* буфер зверху/знизу */
-    margin-block:-12px;     /* щоб не ламати розмітку секції */
+.testi-slider .nav.prev{
+    left:24px;
+}
+.testi-slider .nav.next{
+    left:102px;
 }
 
+/* Вікно слайдера */
+.viewport{
+    overflow:hidden;
+    padding-block:12px;     /* буфер зверху/знизу, щоб ховер не різало */
+    margin-block:-12px;
+}
+
+/* Трек */
 .track{
     display:flex;
     gap:24px; /* синхро з JS */
@@ -1520,15 +1600,11 @@ h4 { font-size: 1.25rem; } /* 20px */
     transition:transform .5s ease-in-out;
 }
 
+/* Слайд – ФІКСОВАНА ШИРИНА КАРТКИ */
 .slide{
-    flex:0 0 auto; /* ширину підставляє JS */
-    overflow:visible;        /* щоб тінь/підйом не різало всередині слайда */
+    flex:0 0 var(--card-w);
+    overflow:visible;
 }
-
-/* Єдина висота картки через змінну */
-.testi-slider{ --card-h: 360px; }
-@media (max-width:1024px){ .testi-slider{ --card-h: 330px; } }
-@media (max-width:700px){  .testi-slider{ --card-h: 300px; } }
 
 /* Картка */
 .card{
@@ -1550,18 +1626,17 @@ h4 { font-size: 1.25rem; } /* 20px */
     justify-items:center;
     row-gap:10px;
 
-    /* Плавний ховер без "ривків" і без масштабування */
     transition:
             border-color .35s ease,
             box-shadow .35s ease,
-            transform .35s cubic-bezier(.22,.61,.36,1); /* smoother */
-    transform: translateY(0);  /* використовуємо transform (а не translate:) */
+            transform .35s cubic-bezier(.22,.61,.36,1);
+    transform: translateY(0);
     will-change: transform, box-shadow, border-color;
 }
 .card:hover{
     border-color: var(--sandstone);
     box-shadow:0 14px 30px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.08);
-    transform: translateY(-6px);    /* підйом більший, але не обрізається */
+    transform: translateY(-6px);
 }
 
 /* Контент картки */
@@ -1604,6 +1679,147 @@ h4 { font-size: 1.25rem; } /* 20px */
     .track{ transition: none; }
     .card{ transition: border-color .2s, box-shadow .2s; }
     .card:hover{ transform:none; }
+}
+/* Картка з фото зверху */
+.card{
+    position:relative;
+    height: var(--card-h);
+    border-radius:18px;
+    overflow:hidden;
+    background:linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--khaki-light) 4%, transparent),
+            color-mix(in srgb, var(--camouflage-green) 26%, transparent)
+    );
+    border:1px solid color-mix(in srgb, var(--sandstone) 32%, transparent);
+    box-shadow:0 10px 24px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.06);
+
+    display:flex;
+    flex-direction:column;
+
+    transition:
+            border-color .35s ease,
+            box-shadow .35s ease,
+            transform .35s cubic-bezier(.22,.61,.36,1);
+    transform: translateY(0);
+    will-change: transform, box-shadow, border-color;
+}
+.card:hover{
+    border-color: var(--sandstone);
+    box-shadow:0 14px 30px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.08);
+    transform: translateY(-6px);
+}
+
+/* Верхня частина — фото */
+.card-media{
+    position:relative;
+    width:100%;
+    aspect-ratio: 4 / 3;
+    background:#000;
+    overflow:hidden;
+}
+.card-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+.card-media::after{
+    content:"";
+    position:absolute;
+    inset:auto 0 0 0;
+    height:40%;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,.45));
+}
+
+/* кнопка play */
+.card-play{
+    position:absolute;
+    left:50%; top:50%;
+    transform:translate(-50%, -50%);
+    width:64px; height:64px;
+    border-radius:999px;
+    border:none;
+    background:rgba(0,0,0,.45);
+    display:grid; place-items:center;
+    cursor:pointer;
+    backdrop-filter: blur(4px);
+}
+.card-play::before{
+    content:"";
+    width:0; height:0;
+    border-left:18px solid #fff;
+    border-top:11px solid transparent;
+    border-bottom:11px solid transparent;
+    margin-left:4px;
+}
+.card-play:hover{ background:rgba(0,0,0,.65); }
+
+/* номер на фото */
+.badge-num{
+    position:absolute;
+    left:18px;
+    top:16px;
+    font-weight:800;
+    font-size:clamp(48px,6vw,60px);
+    line-height:1;
+    color:#fff;
+    text-shadow:0 2px 4px rgba(0,0,0,.7);
+}
+
+/* Нижня частина */
+.card-body{
+    flex:1;
+    padding:18px 20px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+.text{
+    color:var(--text-color-white);
+    font-size:clamp(15px,1vw,17px);
+    line-height:1.6;
+    margin:0;
+}
+
+/* шеврон та підпис по центру */
+.card-footer{
+    margin-top:auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+}
+.emblem{
+    width:46px;
+    height:auto;
+    filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));
+}
+.caption{
+    text-align:center;
+    letter-spacing:.04em;
+    opacity:.9;
+    color:var(--khaki-light);
+    font-size:0.95rem;
+}
+
+.reviews-map {
+    position: absolute;
+    top:-20%;
+    right:8%;
+    width:20%;
+    z-index:-1;
+    opacity: 0.6;
+}
+/* адаптив */
+@media (max-width:700px){
+    .card-body{ padding:16px 16px 18px; }
+    .card-play{ width:54px; height:54px; }
+    .card-play::before{
+        border-left-width:16px;
+        border-top-width:10px;
+        border-bottom-width:10px;
+    }
 }
 
 
