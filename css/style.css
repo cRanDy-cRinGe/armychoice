@@ -2242,6 +2242,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 }
 #contact .contact-icon{ font-size: 1.1rem; }
 
+
 /* Соціальні посилання */
 #contact .contact-social-links{
     display: flex; flex-wrap: wrap; gap: .6rem;

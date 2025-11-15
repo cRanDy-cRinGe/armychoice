@@ -460,6 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     slider.setAttribute('tabindex','0');
 
+    
     // Drag / swipe
     let startX = 0, dragging = false, startTx = 0;
     viewport.addEventListener('pointerdown', (e) => {
