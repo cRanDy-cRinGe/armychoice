@@ -4,23 +4,58 @@
  */
 
 /* ==== Змінні кольорів (Палітра) ==== */
+/*:root {*/
+/*    --deep-green: #ffffff;*/
+/*    --camouflage-green: #ececec;*/
+/*    --sandstone: #838383;*/
+/*    --khaki-light: #1e1e1e;*/
+/*    --signal-orange: #00b2ff;*/
+
+/*    --text-color: var(--khaki-light);*/
+/*    --text-color-dark: var(--deep-green);*/
+/*    --text-color-light: var(--khaki-light);*/
+/*    --text-color-white: #FFFFFF;*/
+
+/*    --border-color: rgba(255, 240, 190, 0.2);*/
+/*    --border-hover: var(--sandstone);*/
+/*    --border-input: rgba(46, 61, 47, 0.3);*/
+/*}*/
+
+/*BLACK/YELLOW*/
 :root {
-    --deep-green: #2E3D2F;
-    --camouflage-green: #516343;
-    --sandstone: #C2B280;
-    --khaki-light: #E6D8AD;
-    --signal-orange: #D97700;
+    --deep-green: #222222;
+    --camouflage-green: #606060;
+    --sandstone: #c5c5c5;
+    --khaki-light: #dddddd;
+    --signal-orange: #ecbb00;
 
     --text-color: var(--khaki-light);
     --text-color-dark: var(--deep-green);
     --text-color-light: var(--khaki-light);
     --text-color-white: #FFFFFF;
 
-    --border-color: rgba(230, 216, 173, 0.2);
+    --border-color: rgba(255, 240, 190, 0.2);
     --border-hover: var(--sandstone);
     --border-input: rgba(46, 61, 47, 0.3);
 }
 
+/*GREEN*/
+/*:root {*/
+/*    --deep-green: #2E3D2F;*/
+/*    --camouflage-green: #516343;*/
+/*    --sandstone: #C2B280;*/
+/*    --khaki-light: #E6D8AD;*/
+/*    --signal-orange: #D97700;*/
+
+/*    --text-color: var(--khaki-light);*/
+/*    --text-color-dark: var(--deep-green);*/
+/*    --text-color-light: var(--khaki-light);*/
+/*    --text-color-white: #FFFFFF;*/
+
+/*    --border-color: rgba(230, 216, 173, 0.2);*/
+/*    --border-hover: var(--sandstone);*/
+/*    --border-input: rgba(46, 61, 47, 0.3);*/
+/*}*/
 /* ==== Базові стилі ==== */
 
 *,
@@ -52,7 +87,7 @@ body::before {
     content: "";
     position: fixed;
     inset: 0;
-    background-image: url("../static/patern_bg2.png");
+    /*background-image: url("../static/patern_bg2.png");*/
     background-repeat: repeat;
     background-size: 50%;background-position-y: 40px;
     opacity: 0.4; /* ← зменшуй або збільшуй */
@@ -101,7 +136,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 .section {
     /*padding-top: 6rem; !* 96px *!*/
     /*padding-bottom: 6rem;*/
-   padding: 6rem 1.5rem;
+   /*padding: 6rem 1.5rem;*/
 }
 
 .section-title {
@@ -164,7 +199,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 
 }
 .btn-primary:hover {
-    background-color: #AF5F00; /* Darker orange */
+    background-color: #c59c00; /* Darker orange */
     transform: scale(1.05);
 }
 
@@ -180,7 +215,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 /* ==== Навігація ==== */
 .navbar {
     width: 100%;
-    background-color: rgba(46, 61, 47, 0.9); /* deep-green з прозорістю */
+    background-color: rgba(57, 57, 57, 0.9); /* deep-green з прозорістю */
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
     height: 4rem; /* 64px */
@@ -567,7 +602,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     width: 72%;
     opacity: 0.8;
     /*mix-blend-mode:  ;*/
-    filter: drop-shadow( 0 0 20px rgba(255, 77, 0, 0.5));
+    filter: drop-shadow( 0 0 20px rgba(255, 9, 0, 0.5));
 
 }
 @media (max-width: 768px) {
@@ -647,7 +682,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     .hero-content { padding-right: clamp(.5rem, 2vw, 2rem); }
 }
 
-/* ==== "Про нас" ==== */
+/* ==== "Про нас" / About ==== */
 
 .section-subtitle-center {
     text-align: center;
@@ -658,48 +693,208 @@ h4 { font-size: 1.25rem; } /* 20px */
     color: var(--text-color-white);
 }
 
-/* Нова картка (світла) */
-.feature-card {
-    background-color: var(--khaki-light);
-    color: var(--text-color-light);
-    padding: 2rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    border: 1px solid var(--border-input);
+.about {
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 1.5rem;
+}
+
+/* легкий “шум” по фону */
+.about::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+            radial-gradient(1200px 600px at 10% -10%, rgba(0,0,0,.06), transparent 60%),
+            radial-gradient(1000px 500px at 110% 10%, rgba(0,0,0,.05), transparent 55%);
+    pointer-events: none;
+    opacity: .6;
+}
+
+.about-head {
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 2.5rem;
+}
+
+.about-overline {
+    padding: .35rem .7rem;
+    margin-bottom: .75rem;
+}
+
+.about-title {
+    margin-bottom: 1rem;
+    color: #f3f3f3;
+    text-shadow: 1px 2px 5px rgba(0,0,0,0.1);
+}
+
+.about-subtitle {
+    max-width: 900px;
+    margin: 0 auto 0;
+    color: var(--khaki-light);
+    font-size: 1.1rem;
+    text-shadow: 1px 2px 5px rgba(0,0,0,0.1);
+}
+
+/* ==== Feature cards for About ==== */
+
+.feature-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: .75rem;
+    background: rgba(57, 57, 57, 0.7);
+    /*background: linear-gradient(180deg, rgba(230,216,173,.06), rgba(230,216,173,.03));*/
+    border: 2px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.75rem 1.5rem;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    transform: translateY(-4px);
+    border-color: var(--sandstone);
+    box-shadow: 0 10px 24px rgba(0,0,0,.18);
 }
 
-/* Перевизначення кольору заголовка для світлої картки */
-.feature-card .card-title {
-    color: var(--text-color-white);
-    font-weight: bold;
-}
-
-/* Іконка (кружечок) */
 .feature-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: var(--camouflage-green); /* Фон іконки з палітри */
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1.5rem auto; /* Центрування іконки */
+    margin-bottom: .25rem;
 }
 
-/* Стилізація SVG всередині іконки */
 .feature-icon svg {
-    width: 32px;
-    height: 32px;
-    fill: var(--text-color-white); /* Колір SVG іконки */
+    width: 30px;
+    height: 30px;
+    fill: var(--text-color-white);
 }
-/* ==== Картки (Загальні) ==== */
+
+.feature-card .card-title {
+    color: var(--text-color-white);
+    font-weight: 800;
+    letter-spacing: .2px;
+}
+
+.feature-card p {
+    color: rgba(230,216,173,.9);
+    max-width: 36ch;
+}
+
+/* ==== Glass card (military-tech) ==== */
+
+.feature-card.glass {
+    position: relative;
+    isolation: isolate;
+    border: 2px solid color-mix(in srgb, var(--sandstone) 38%, transparent);
+    border-radius: 6px;
+    padding: 1.9rem 1.6rem;
+    backdrop-filter: blur(14px) saturate(118%);
+    -webkit-backdrop-filter: blur(14px) saturate(118%);
+    box-shadow:
+            0 10px 24px rgba(0,0,0,.1),
+            inset 0 1px 0 color-mix(in srgb, var(--khaki-light) 14%, transparent);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+/* світлий контур-ореол */
+.feature-card.glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 1px;
+    pointer-events: none;
+    /*background: var(--deep-green);*/
+    /*background: linear-gradient(*/
+    /*        180deg,*/
+    /*        color-mix(in srgb, var(--khaki-light) 14%, transparent),*/
+    /*        transparent 40%*/
+    /*);*/
+    mask: linear-gradient(#000, transparent 80%);
+    opacity: .7;
+}
+
+/*!* текстура/зернистість *!*/
+/*.feature-card.glass::after {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    inset: -1px;*/
+/*    border-radius: 16px;*/
+/*    background:*/
+/*            radial-gradient(1200px 600px at -10% -10%, rgba(255,255,255,.04), transparent 60%),*/
+/*            radial-gradient(1200px 600px at 110% 10%, rgba(0,0,0,.06), transparent 55%),*/
+/*            repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 2px, transparent 2px 4px);*/
+/*    mix-blend-mode: overlay;*/
+/*    opacity: .55;*/
+/*    z-index: -1;*/
+/*}*/
+
+.feature-card.glass:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--sandstone) 60%, transparent);
+    box-shadow:
+            0 16px 36px rgba(0,0,0,.28),
+            inset 0 1px 0 color-mix(in srgb, var(--khaki-light) 18%, transparent);
+}
+
+.feature-card.glass p {
+    color: color-mix(in srgb, var(--khaki-light) 85%, var(--deep-green) 15%);
+}
+
+.feature-icon.glass-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-icon.glass-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--khaki-light);
+}
+
+/* фокус для доступності */
+.feature-card.glass:focus-within {
+    outline: 2px solid color-mix(in srgb, var(--sandstone) 65%, transparent);
+    outline-offset: 2px;
+}
+
+/* Fallback, якщо нема backdrop-filter */
+@supports not (backdrop-filter: blur(1px)) {
+    .feature-card.glass {
+        background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.18));
+    }
+}
+
+/* Менше руху */
+@media (prefers-reduced-motion: reduce) {
+    .feature-card,
+    .feature-card:hover,
+    .feature-card.glass,
+    .feature-card.glass:hover {
+        transition: none;
+        transform: none;
+    }
+}
+
+/* Брейкпойнти для десктопа */
+@media (min-width: 1024px) {
+    .about-head {
+        margin-bottom: 3rem;
+    }
+    .feature-card {
+        padding: 2rem 1.75rem;
+    }
+}
+
+/* ==== General cards / services (залишив, бо вони окремі й без дублікатів) ==== */
+
 .card {
     background-color: var(--deep-green);
     padding: 2rem;
@@ -718,12 +913,10 @@ h4 { font-size: 1.25rem; } /* 20px */
     margin-bottom: 0.75rem;
 }
 
-/* ==== Спеціальності ==== */
 .service-card {
     background-color: var(--deep-green);
 }
 
-/* Секція "Спеціальності" має фон --camouflage-green, тому картки на ній мають бути --deep-green */
 #services .card {
     background-color: var(--deep-green);
 }
@@ -732,272 +925,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     font-size: 3rem;
     margin-bottom: 1rem;
 }
-/* ===== About (polished) ===== */
-.about { position: relative; overflow: hidden; }
 
-/* Ледь помітний камуфляжний шум по фону */
-.about::before{
-    content:"";
-    position:absolute; inset:0;
-    background:
-            radial-gradient(1200px 600px at 10% -10%, rgba(0,0,0,.06), transparent 60%),
-            radial-gradient(1000px 500px at 110% 10%, rgba(0,0,0,.05), transparent 55%);
-    pointer-events:none;
-    opacity:.6;
-}
-
-.about-head{ text-align:center; margin-bottom:2.5rem; }
-.about-overline{
-    display:inline-block;
-    font-size:.85rem;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    color: var(--sandstone);
-    background: rgba(194,178,128,.12); /* sandstone/12% */
-    border: 1px solid var(--border-color);
-    padding:.35rem .7rem;
-    border-radius:.4rem;
-    margin-bottom:.75rem;
-    box-shadow: 0 6px 20px rgba(0,0,0, 0.15);
-}
-.about-title{
-    margin-bottom:1rem;
-
-    text-shadow: 1px 2px 5px rgba(0,0,0, 0.1);
-
-}
-.about-subtitle{
-    max-width: 900px;
-    margin: 0 auto 0;
-    color: rgba(230,216,173,.92); /* khaki-light/92 */
-    font-size: 1.1rem;
-    text-shadow: 1px 2px 5px rgba(0,0,0, 0.1);
-}
-
-/* Вирівнюємо висоти карток і робимо їх “дихаючими” */
-.about-features .feature-card{
-    display:flex; flex-direction:column; align-items:center; text-align:center;
-    gap:.75rem;
-    background: linear-gradient(180deg, rgba(230,216,173,.06), rgba(230,216,173,.03));
-    border: 1px solid var(--border-color);
-    border-radius: 1rem;
-    padding: 1.75rem 1.5rem;
-    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-}
-.about-features .feature-card:hover{
-    transform: translateY(-4px);
-    border-color: var(--sandstone);
-    box-shadow: 0 10px 24px rgba(0,0,0,.18);
-}
-
-.feature-icon{
-    width:72px; height:72px; border-radius: 16px;
-    display:flex; align-items:center; justify-content:center;
-    background: rgba(46,61,47,.55); /* deep-green/55% */
-    outline: 1px solid var(--border-input);
-    box-shadow: inset 0 0 0 2px rgba(230,216,173,.12);
-    margin-bottom:.25rem;
-}
-.feature-icon svg{ width:30px; height:30px; fill: var(--khaki-light); }
-
-.feature-card .card-title{
-    color: var(--text-color-white);
-    font-weight: 800;
-    letter-spacing:.2px;
-}
-
-.about-features .feature-card p{
-    color: rgba(230,216,173,.9);
-    max-width: 36ch;
-}
-/* ===== Glass card (military-tech) ===== */
-.feature-card.glass{
-    position: relative;
-    isolation:isolate; /* щоб псевдоелементи не текли назовні */
-    /* напівпрозорий фон у палітрі сайту */
-    /*background:*/
-    /*        linear-gradient(180deg,*/
-    /*        color-mix(in srgb, var(--khaki-light) 3%, transparent),*/
-    /*        color-mix(in srgb, var(--camouflage-green) 10%, transparent) 60%,*/
-    /*        color-mix(in srgb, var(--camouflage-green) 20%, transparent) 100%);*/
-    border: 1px solid color-mix(in srgb, var(--sandstone) 38%, transparent);
-    border-radius: 16px;
-    padding: 1.9rem 1.6rem;
-    backdrop-filter: blur(14px) saturate(118%);
-    -webkit-backdrop-filter: blur(14px) saturate(118%);
-    box-shadow:
-            0 10px 24px rgba(0,0,0,.22),
-            inset 0 1px 0 color-mix(in srgb, var(--khaki-light) 14%, transparent); /* верхній “блік” */
-    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-}
-
-/* тонкий світлий контур-ореол */
-.feature-card.glass::before{
-    content:"";
-    position:absolute; inset:0;
-    border-radius:16px;
-    pointer-events:none;
-    background:
-            linear-gradient(180deg,
-            color-mix(in srgb, var(--khaki-light) 14%, transparent),
-            transparent 40%);
-    mask: linear-gradient(#000, transparent 80%);
-    opacity:.7;
-}
-
-/* легка зернистість/текстура, щоб скло не виглядало “пластиком” */
-.feature-card.glass::after{
-    content:"";
-    position:absolute; inset:-1px;
-    border-radius:16px;
-    background:
-            radial-gradient(1200px 600px at -10% -10%, rgba(255,255,255,.04), transparent 60%),
-            radial-gradient(1200px 600px at 110% 10%, rgba(0,0,0,.06), transparent 55%),
-            repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 2px, transparent 2px 4px);
-    mix-blend-mode: overlay;
-    opacity:.55;
-    z-index:-1;
-}
-
-.feature-card.glass:hover{
-    transform: translateY(-4px);
-    border-color: color-mix(in srgb, var(--sandstone) 60%, transparent);
-    box-shadow:
-            0 16px 36px rgba(0,0,0,.28),
-            inset 0 1px 0 color-mix(in srgb, var(--khaki-light) 18%, transparent);
-}
-
-/* Текст у склі — читабельний та теплий */
-.feature-card.glass .card-title{
-    color: var(--text-color-white);
-    font-weight: 800;
-    letter-spacing:.2px;
-}
-.feature-card.glass p{
-    color: color-mix(in srgb, var(--khaki-light) 85%, var(--deep-green) 15%);
-}
-
-/* Іконка — скляна “плитка” в тій самій темі */
-.feature-icon.glass-icon{
-    width:72px; height:72px; border-radius:16px;
-    display:flex; align-items:center; justify-content:center;
-    background:
-            linear-gradient(180deg,
-            color-mix(in srgb, var(--camouflage-green) 55%, transparent),
-            color-mix(in srgb, var(--khaki-light) 8%, transparent));
-    border:1px solid color-mix(in srgb, var(--sandstone) 35%, transparent);
-    backdrop-filter: blur(10px) saturate(120%);
-    -webkit-backdrop-filter: blur(10px) saturate(120%);
-    box-shadow:
-            0 6px 16px rgba(0,0,0,.22),
-            inset 0 1px 0 color-mix(in srgb, var(--khaki-light) 16%, transparent);
-}
-.feature-icon.glass-icon svg{
-    width:30px; height:30px;
-    fill: var(--khaki-light);
-}
-
-/* Акуратний фокус для доступності */
-.feature-card.glass:focus-within{
-    outline: 2px solid color-mix(in srgb, var(--sandstone) 65%, transparent);
-    outline-offset: 2px;
-}
-
-/* Fallback, якщо немає backdrop-filter */
-@supports not (backdrop-filter: blur(1px)) {
-    .feature-card.glass{
-        background: linear-gradient(180deg,
-        rgba(255,255,255,.06), rgba(0,0,0,.18));
-    }
-}
-
-/* Менше руху для користувачів з обмеженням анімацій */
-@media (prefers-reduced-motion: reduce){
-    .feature-card.glass,
-    .feature-card.glass:hover{ transition: none; transform: none; }
-}
-/* ===== Contacts glass bar ===== */
-.contacts-bar{
-
-    --pill-bg: linear-gradient(180deg,
-    color-mix(in srgb, var(--camouflage-green) 40%, transparent),
-    color-mix(in srgb, var(--khaki-light) 10%, transparent));
-    --pill-stroke: color-mix(in srgb, var(--khaki-light) 28%, transparent);
-    --pill-shadow: 0 10px 24px rgba(0,0,0,.25);
-
-    margin-top: 1.5rem;
-    display:flex; flex-wrap:wrap; gap:.9rem;
-    align-items:center; justify-content:center;
-    padding:.75rem 1rem;
-    border-radius: 16px;
-    background: var(--pill-bg);
-    border:1px solid var(--pill-stroke);
-    backdrop-filter: blur(12px) saturate(120%);
-    -webkit-backdrop-filter: blur(12px) saturate(120%);
-    box-shadow: var(--pill-shadow);
-    color: var(--khaki-light);
-}
-
-.contact-item{
-    display:flex; align-items:center; gap:.55rem;
-    padding:.55rem .85rem;
-    border-radius: 999px;
-    text-decoration:none;
-    color: var(--khaki-light);
-    border:1px solid transparent;
-    transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
-}
-
-.contact-item:hover{
-    transform: translateY(-1px);
-    border-color: color-mix(in srgb, var(--sandstone) 45%, transparent);
-    background: radial-gradient(120% 120% at 10% 10%, rgba(226,210,165,.08), transparent 60%);
-}
-
-/* Icon tile */
-.contact-item .icon{
-    width:28px; height:28px; min-width:28px;
-    display:grid; place-items:center;
-    border-radius: 999px;
-    background: linear-gradient(180deg,
-    color-mix(in srgb, var(--deep-green) 55%, transparent),
-    color-mix(in srgb, var(--khaki-light) 10%, transparent));
-    outline: 1px solid color-mix(in srgb, var(--khaki-light) 22%, transparent);
-    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--khaki-light) 16%, transparent);
-}
-
-.contact-item .icon svg{
-    width:15px; height:15px; fill: var(--khaki-light);
-}
-
-.contact-item .label{
-    font-weight: 500;
-    letter-spacing:.2px;
-    color: var(--khaki-light);
-}
-
-/* Focus & a11y */
-.contact-item:focus-visible{
-    outline:2px solid var(--sandstone);
-    outline-offset:2px;
-}
-
-/* Mobile: робимо компактніше й у 2 рядки за потреби */
-@media (max-width: 640px){
-    .contacts-bar{
-        padding:.6rem .7rem;
-        gap:.6rem;
-        flex-direction: column;
-    }
-    .contact-item{ padding:.5rem .7rem; }
-    .contact-item .label{ font-size:.95rem; }
-}
-
-/* легкі брейкпойнти — щоб композиція була щільнішою на великих */
-@media (min-width: 1024px){
-    .about-head{ margin-bottom:3rem; }
-    .about-features .feature-card{ padding: 2rem 1.75rem; }
-}
 
 
 
@@ -1171,7 +1099,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     pointer-events: none;
     transform: translateY(0);
     animation: floatSoldier 6s ease-in-out infinite alternate;
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+    /*-webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgb(255, 0, 0) 100%);*/
     mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
@@ -1202,9 +1130,26 @@ h4 { font-size: 1.25rem; } /* 20px */
     }
 }
 
+.fpv {
+    position: absolute;
+    transform: translateX(-200px) translateY(-350px);
+    width: 250px;
+    height: 250px;
+}
 
+.fpv img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
 
-
+}
+@media (max-width: 768px) {
+    .fpv {
+        display: none;
+    }
+    
+}
 /* ==== Compare (olive-camouflage style) ==== */
 .compare.olive {
     background: var(--camouflage-green);
@@ -1456,12 +1401,12 @@ h4 { font-size: 1.25rem; } /* 20px */
 .compare.neo.in-view .compare-item{
     opacity: 1; transform: translateY(0) scale(1);
 }
-.compare.neo.in-view .compare-col.recruit .compare-item:nth-child(n){
-    transition-delay: calc(30ms * (var(--i, 0)));
-}
-.compare.neo.in-view .compare-col.mobilization .compare-item:nth-child(n){
-    transition-delay: calc(30ms * (var(--i, 0)));
-}
+/*.compare.neo.in-view .compare-col.recruit .compare-item:nth-child(n){*/
+/*    transition-delay: calc(30ms * (var(--i, 0)));*/
+/*}*/
+/*.compare.neo.in-view .compare-col.mobilization .compare-item:nth-child(n){*/
+/*    transition-delay: calc(30ms * (var(--i, 0)));*/
+/*}*/
 /* --- акуратні акцент-лінії біля пунктів --- */
 .compare.neo .compare-item{
     padding-left: 18px;                 /* трохи місця для лінії */
@@ -1507,6 +1452,414 @@ h4 { font-size: 1.25rem; } /* 20px */
         bottom: 10px;
     }
 }
+
+
+/* ==== Vacancies & brigades ==== */
+
+.vacancies {
+    background: var(--deep-green);
+    border-top: 1px solid rgba(230,216,173,0.16);
+}
+
+.vacancies .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+.vacancies-left {
+    padding: 3rem 0
+}
+.vacancies-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    .vacancies-layout {
+        grid-template-columns: 1fr;
+        gap: 2.25rem;
+    }
+}
+
+/* Ліва частина */
+
+.vacancies-title {
+    color: var(--text-color-white);
+    font-weight: 900;
+    letter-spacing: .2px;
+    font-size: clamp(28px, 3.8vw, 40px);
+    margin: 0 0 0.5rem;
+}
+
+.vacancies-subtitle {
+    max-width: 540px;
+    color: color-mix(in srgb, var(--khaki-light) 88%, white 4%);
+    font-size: 0.98rem;
+    opacity: .95;
+}
+
+/* Список вакансій */
+
+.vacancy-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.75rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    /* обмеження ширини карток */
+    max-width: min(70vw, 720px);
+}
+
+@media (max-width: 900px) {
+    .vacancy-list {
+        max-width: 100%;
+    }
+}
+
+/* Картка вакансії як єдиний блок */
+
+.vacancy-item {
+    position: relative;
+    width: 110%;
+    box-sizing: border-box;
+    border-radius: 16px;
+    background: #222222; /* темно-сірий, не чорний */
+    border: 1px solid rgba(230,216,173,0.22);
+    box-shadow: 0 8px 18px rgba(0,0,0,.18);
+    transition:
+            transform .25s cubic-bezier(.22,.7,.26,1),
+            box-shadow .25s ease,
+            border-color .25s ease,
+            background .25s ease;
+    overflow: hidden;
+}
+
+.vacancy-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(0,0,0,.24);
+    border-color: color-mix(in srgb, var(--sandstone) 40%, transparent);
+    background: #2f2f32; /* трохи світліший сірий при hover */
+}
+
+/* Верхня частина картки */
+
+.vacancy-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    width: 100%;
+    padding: 14px 18px;
+    background: transparent;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.vacancy-main {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.vacancy-name {
+    display: block;
+    color: var(--text-color-white);
+    font-weight: 800;
+    font-size: clamp(1rem, 1.05rem + .2vw, 1.25rem);
+}
+
+.vacancy-brigades {
+    display: block;
+    font-size: .86rem;
+    color: color-mix(in srgb, var(--khaki-light) 80%, white 6%);
+    opacity: .9;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.vacancy-meta {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-shrink: 0;
+}
+
+/* Чіп типу вакансії */
+
+.vacancy-type {
+    padding: .25rem .75rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    background: #202020; /* ще один відтінок темно-сірого */
+    color: var(--khaki-light);
+    border: 1px solid color-mix(in srgb, var(--sandstone) 35%, transparent);
+}
+
+/* Плюсик */
+
+.vacancy-plus {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--sandstone) 40%, transparent);
+    display: grid;
+    place-items: center;
+    transition: background .25s ease, border-color .25s ease, transform .25s ease;
+}
+
+.vacancy-plus::before,
+.vacancy-plus::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--khaki-light);
+    transition: transform .25s ease, opacity .2s ease;
+}
+
+.vacancy-plus::after {
+    transform: rotate(90deg);
+}
+
+.vacancy-item:hover .vacancy-plus {
+    background: color-mix(in srgb, var(--sandstone) 14%, transparent);
+    border-color: color-mix(in srgb, var(--signal-orange) 40%, transparent);
+    transform: translateY(-1px);
+}
+
+/* Мобілка */
+
+@media (max-width: 720px) {
+    .vacancy-row {
+        padding: 14px 14px;
+        align-items: flex-start;
+    }
+    .vacancy-meta {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+}
+
+/* прихована частина з описом */
+
+.vacancy-body {
+    width: 100%;
+    box-sizing: border-box;
+
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--khaki-light) 85%, white 5%);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(-6px);
+    background: #1b1b1b; /* темний сірий для розкритої частини */
+    border-top: 1px solid rgba(218, 218, 218, 0.4);
+    border-radius: 0 0 16px 16px;
+    transition:
+            max-height 0.3s ease,
+            opacity 0.22s ease,
+            transform 0.22s ease;
+    transition: 0.3s all;
+}
+
+/* відкрита картка */
+
+.vacancy-item.is-open .vacancy-body {
+    max-height: 260px;
+    opacity: 1;
+    transform: translateY(0);
+    padding: 16px 18px 16px 18px;
+    transition: 0.3s all;
+}
+
+.vacancy-item.is-open {
+    background: #272727;
+    border-color: color-mix(in srgb, var(--sandstone) 48%, transparent);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.34);
+}
+
+/* шапка при відкритті */
+
+.vacancy-item.is-open .vacancy-row {
+    border-radius: 16px 16px 0 0;
+}
+
+/* плюсик → мінус */
+
+.vacancy-item.is-open .vacancy-plus::after {
+    opacity: 0;
+}
+
+
+/* ==== Права частина: напівкруглий слайдер шевронів ==== */
+
+.vacancies-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 360px;
+    overflow: visible;
+
+    /* штовхаємо блок так, щоб орбіта була врівень з правим краєм екрану */
+    margin-right: max(-24px, calc(-24px - (100vw - 1200px) / 2));
+}
+
+@media (max-width: 768px) {
+    .vacancies-right {
+        justify-content: center;
+        margin-right: 0;
+    }
+}
+
+
+/* видиме "вікно" зі слайдером */
+.chevron-area {
+    position: relative;
+    width: min(520px, 90vw);   /* ширше, щоб дуга заходила в контент */
+    height: min(700px, 140vw);
+    overflow: visible;
+}
+
+/* svg-крива */
+.chevron-path {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: visible;
+}
+
+/* базові налаштування для всіх дуг */
+.chevron-path .orbit {
+    fill: none;
+    stroke-linecap: round;
+    opacity: 0.45;
+}
+/* основна орбіта (та, по якій їздять шеврони) */
+.orbit-main {
+    stroke: color-mix(in srgb, var(--khaki-light) 96%, white 6%);
+    stroke-width: 3px;
+    stroke-dasharray: 0 22;   /* розмір та відстань між крапочками */
+    opacity: 0.55;
+}
+
+/* трошки далі від неї – крупніші/рідші крапки */
+.orbit-outer-1 {
+    stroke: color-mix(in srgb, var(--khaki-light) 90%, white 4%);
+    stroke-width: 2.4px;
+    stroke-dasharray: 0 20;
+    opacity: 0.4;
+}
+
+.orbit-outer-2 {
+    stroke: color-mix(in srgb, var(--khaki-light) 80%, white 4%);
+    stroke-width: 1.8px;
+    stroke-dasharray: 0 18;
+    opacity: 0.3;
+}
+
+/* ближче до центру – дрібніші та щільніші */
+.orbit-inner-1 {
+    stroke: color-mix(in srgb, var(--khaki-light) 88%, white 6%);
+    stroke-width: 2.2px;
+    stroke-dasharray: 0 16;
+    opacity: 0.42;
+}
+
+.orbit-inner-2 {
+    stroke: color-mix(in srgb, var(--khaki-light) 80%, white 8%);
+    stroke-width: 1.6px;
+    stroke-dasharray: 0 14;
+    opacity: 0.32;
+}
+
+/*
+  Стилі для лінії, які я додав минулого разу
+*/
+.chevron-path path {
+    stroke: color-mix(in srgb, var(--signal-orange) 96%, white 10%);
+    stroke-width: 3px;
+    stroke-linecap: round;
+
+
+    stroke-dasharray: 0 20;
+
+    opacity: 0.55;
+}
+
+/* шеврони, що рухаються по тій же траєкторії *//* шеврони на орбіті – БЕЗ css-анімації, все крутить JS */
+.chevron {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 90px;
+
+    /* та сама траєкторія, що й у SVG */
+    offset-path: path("M 540 0 Q 340 320 540 700");
+    offset-rotate: 0deg;
+
+    opacity: 0;
+    transform: scale(0.9);
+    transition:
+            opacity .45s ease-out,
+            transform .45s ease-out,
+            filter .45s ease-out;
+}
+
+/* картинки всередині як було */
+.chevron img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 10px 22px rgba(0,0,0,.55));
+}
+/* прозорий hitbox поверх правого краю – саме тут крутимо колесо */
+.chevron-scroll-zone {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;     /* ширина зони, підбери під свою орбіту */
+    height: 100%;
+    z-index: 5;
+    background: transparent;
+}
+
+
+/* самі шляхи-орбіти лишаємо лише як "напрямні" для JS */
+.chevron-path .orbit {
+    fill: none;
+    stroke: none;   /* лінію ховаємо */
+}
+
+/* базовий стиль крапок */
+.chevron-path .orbit-dots circle {
+    fill: color-mix(in srgb, var(--khaki-light) 96%, white 6%);
+    opacity: 0.2;          /* ~20% прозорості */
+    pointer-events: none;
+}
+
+/* легкі варіації, щоб кільця не зливалися (можна й прибрати) */
+.chevron-path .orbit-dots-0 circle { opacity: 0.18; }
+.chevron-path .orbit-dots-1 circle { opacity: 0.19; }
+.chevron-path .orbit-dots-2 circle { opacity: 0.20; } /* основне кільце */
+.chevron-path .orbit-dots-3 circle { opacity: 0.19; }
+.chevron-path .orbit-dots-4 circle { opacity: 0.18; }
+/* Акордеон для списку вакансій (як FAQ, але темніший) */
 
 
 
@@ -1878,27 +2231,19 @@ h4 { font-size: 1.25rem; } /* 20px */
 /* card */
 .faq-item{
     position:relative;
-    padding:18px 18px 18px 20px;
     border-radius:16px;
     background:
             linear-gradient(180deg,
             color-mix(in oklab, var(--card) 60%, transparent),
-            transparent 80%)
-;
+            transparent 80%);
     border:1px solid var(--stroke);
     box-shadow: 0 8px 18px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.05);
     transition: transform .28s cubic-bezier(.22,.61,.36,1),
-    box-shadow .28s ease, border-color .28s ease;
+    box-shadow .28s ease,
+    border-color .28s ease,
+    background .28s ease;
+    overflow: hidden;
 }
-.faq-item::after{
-    /* тонкий роздільник з відступом всередині картки */
-    content:"";
-    position:absolute; inset:auto 20px 0 72px; height:1px;
-    background: linear-gradient(90deg, transparent, rgba(230,216,173,.18), transparent);
-    opacity:.8;
-    pointer-events:none;
-}
-.faq-item:last-child::after{ display:none; }
 
 .faq-item:hover{
     transform: translateY(-3px);
@@ -1913,17 +2258,32 @@ h4 { font-size: 1.25rem; } /* 20px */
     0 10px 22px rgba(0,0,0,.18);
 }
 
-/* question row */
+/* шапка питання + плюсик */
+.faq-header{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:18px 20px 18px 20px;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    text-align:left;
+}
+
+/* питання з номером */
 .faq-q{
     counter-increment: faq;
     position:relative;
-    margin:0 0 .35rem 0;
-    padding-left: 56px; /* місце під номер-чіп */
+    margin:0;
+    padding-left:56px; /* місце під номер-чіп */
     color: var(--ink);
     font-weight:800;
     font-size: clamp(18px, 2.2vw, 22px);
     line-height:1.3;
 }
+
 .faq-q::before {
     content: counter(faq) ".";
     position: absolute;
@@ -1939,8 +2299,69 @@ h4 { font-size: 1.25rem; } /* 20px */
     color: var(--signal-orange);
 }
 
+/* плюсик справа */
+.faq-toggle{
+    position:relative;
+    flex:0 0 auto;
+    width:28px;
+    height:28px;
+    border-radius:999px;
+    /*border:1px solid color-mix(in oklab, var(--sandstone) 40%, transparent);*/
+    display:grid;
+    place-items:center;
+    transition: background .25s ease, border-color .25s ease, transform .25s ease;
+}
 
-/* answer */
+.faq-toggle::before,
+.faq-toggle::after{
+    content:"";
+    position:absolute;
+    width:14px;
+    height:2px;
+    border-radius:999px;
+    background:var(--ink);
+    transition: transform .25s ease, opacity .2s ease;
+}
+
+/* горизонтальна риска */
+.faq-toggle::before{
+    transform:rotate(0deg);
+}
+
+/* вертикальна риска – формує плюс */
+.faq-toggle::after{
+    transform:rotate(90deg);
+}
+
+/* відкритий стан: перетворюємо плюс у мінус */
+.faq-item.is-open .faq-toggle{
+    background: color-mix(in oklab, var(--sandstone) 12%, transparent);
+    border-color: color-mix(in oklab, var(--signal-orange) 45%, transparent);
+}
+.faq-item.is-open .faq-toggle::after{
+    opacity:0;                /* прибрали вертикальну лінію */
+}
+
+/* блок з відповіддю */
+.faq-body{
+    padding:0 20px 18px 20px;
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transform: translateY(-4px);
+    transition:
+            max-height .32s ease,
+            opacity .25s ease,
+            transform .25s ease;
+}
+
+.faq-item.is-open .faq-body{
+    max-height:300px; /* достатньо для одного абзацу */
+    opacity:1;
+    transform: translateY(0);
+}
+
+/* відповідь */
 .faq-a{
     margin:0;
     padding-left:56px;
@@ -1950,46 +2371,40 @@ h4 { font-size: 1.25rem; } /* 20px */
 }
 .faq-a strong{ color: var(--sandstone); }
 
-/* hover accent on the question text only */
+/* hover-акцент на тексті питання */
 .faq-item:hover .faq-q{ text-shadow: 0 1px 0 rgba(0,0,0,.25); }
 
 /* compact on small screens */
 @media (max-width: 720px){
-    .faq-item{ padding:16px; border-radius:14px; }
-    .faq-item::after{ inset:auto 16px 0 64px; }
+    .faq-header{ padding:16px; }
+    .faq-body{ padding:0 16px 16px 16px; }
+
+    .faq-item{ border-radius:14px; }
+
     .faq-q, .faq-a{ padding-left:50px; }
-    .faq-q::before{ left:10px; width:30px; height:30px; font-size:15px; }
+    .faq-q::before{
+        left:10px;
+        width:30px;
+        height:30px;
+        font-size:15px;
+    }
 }
 
 /* respect reduced motion */
 @media (prefers-reduced-motion: reduce){
-    .faq-item{ transition: border-color .2s, box-shadow .2s; }
+    .faq-item{
+        transition: border-color .2s, box-shadow .2s, background .2s;
+    }
     .faq-item:hover{ transform:none; }
-}
-
-
-
-/* ==== Контакти ==== */
-.contact-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-@media (min-width: 1024px) {
-    .contact-container {
-        grid-template-columns: 1fr 1fr;
+    .faq-body{
+        transition: max-height .001s linear;
     }
 }
 
-.contact-subtitle {
-    font-size: 1.75rem;
-    color: var(--text-color-white);
-    margin-bottom: 1.5rem;
-}
 
+
+
+/* ==== Контакти (глобальні базові) ==== */
 .contact-form {
     display: flex;
     flex-direction: column;
@@ -1999,85 +2414,177 @@ h4 { font-size: 1.25rem; } /* 20px */
 .form-input {
     width: 100%;
     padding: 0.75rem 1rem;
-    border-radius: 0.375rem;
+    border-radius: 0.75rem;
     border: 1px solid var(--border-input);
-    background-color: var(--khaki-light);
-    color: var(--text-color-dark);
+    background-color: rgba(255,255,255,.04);
+    color: var(--khaki-light);
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
 }
 
 .form-input::placeholder {
-    color: rgba(46, 61, 47, 0.7); /* deep-green/70 */
+    color: color-mix(in oklab, var(--khaki-light) 70%, white);
 }
 
 .form-input:focus {
     outline: none;
-    border-color: var(--signal-orange);
-    box-shadow: 0 0 0 2px rgba(217, 119, 0, 0.4);
+    border-color: var(--sandstone);
+    box-shadow: 0 0 0 3px rgba(194,178,128,.25);
+    background-color: rgba(255,255,255,.06);
 }
 
-.contact-info p {
-    margin-bottom: 1rem;
+/* ==== Contact (deep-green theme) ==== */
+
+#contact {
+    background: var(--deep-green);
+    padding: 5rem 1.5rem 4.5rem;
+    border-top: 1px solid rgba(230,216,173,.10);
+    border-bottom: 1px solid rgba(230,216,173,.10);
 }
 
-.contact-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.contact-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 1.125rem;
-}
-
-.contact-link:hover {
-    color: var(--sandstone);
-}
-
-.contact-icon {
-    font-size: 1.5rem;
-}
-
-.contact-social-title {
+/* Заголовок секції */
+#contact .section-title {
     color: var(--text-color-white);
-    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 900;
+    letter-spacing: .2px;
+    margin-bottom: 2.25rem;
 }
 
-.contact-social-links {
+/* ЄДИНИЙ блок-картка для всього контенту */
+#contact .contact-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(0,0,0,.14);
+    border: 1px solid rgba(230,216,173,.14);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 24px rgba(0,0,0,.18);
+}
+
+/* Дві колонки всередині картки */
+#contact .contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 2rem;
+}
+
+@media (max-width: 900px) {
+    #contact .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Внутрішні блоки без окремих “карток” */
+#contact .contact-form-wrapper,
+#contact .contact-info {
+    padding: 0;
+}
+
+/* Підзаголовки */
+#contact .contact-subtitle {
+    color: var(--text-color-white);
+    font-weight: 800;
+    margin: 0 0 1rem;
+    font-size: 1.35rem;
+}
+
+#contact .contact-subtitle-main {
+    font-size: 1.75rem;
+    line-height: 1.25;
+}
+
+/* Текст правого блоку */
+#contact p {
+    color: color-mix(in oklab, var(--khaki-light) 90%, white);
+    margin: 0 0 .4rem;
+}
+
+#contact .contact-block {
+    margin-bottom: 1.4rem;
+}
+
+#contact .contact-label {
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+#contact .contact-phone {
+    font-size: 1.2rem;
+}
+
+/* Соцмережі */
+#contact .contact-social {
+    margin-top: 1.5rem;
+}
+
+#contact .contact-social-label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: var(--text-color-white);
+}
+
+#contact .contact-social-links {
     display: flex;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: .6rem;
 }
 
-.social-link {
-    font-weight: 500;
+#contact .social-link {
+    display: inline-block;
+    padding: .45rem .75rem;
+    border-radius: 10px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(230,216,173,.18);
+    color: var(--khaki-light);
+    text-decoration: none;
+    font-size: 0.95rem;
 }
 
-.social-link:hover {
-    color: var(--sandstone);
+#contact .social-link:hover {
+    border-color: var(--sandstone);
+    background: rgba(255,255,255,.08);
 }
 
-/* ==== Функція Gemini ==== */
-.gemini-feature {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+/* Кнопки у палітрі сайту */
+#contact .btn {
+    border-radius: 12px;
+    padding: .85rem 1.1rem;
+    font-weight: 700;
+    border: 1px solid transparent;
 }
 
-.gemini-feature .btn {
+#contact .btn-primary {
+    background: var(--signal-orange);
+    color: #fff;
+}
+
+#contact .btn-primary:hover {
+    filter: brightness(.95);
+}
+
+/* ==== Колишні gemini-класи, перейменовані ==== */
+.apply-feature {
+    background: rgba(255,255,255,.03);
+    border: 1px dashed rgba(230,216,173,.25);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: .5rem 0 1rem;
+    color: color-mix(in oklab, var(--khaki-light) 88%, white);
+}
+
+.apply-feature .btn {
     width: 100%;
 }
 
-.gemini-status {
+/* Якщо будеш показувати статус/результат — ось класи */
+.apply-status {
     text-align: center;
-    color: rgba(230, 216, 173, 0.8); /* khaki-light/80 */
+    color: rgba(230,216,173,0.8);
 }
 
-.gemini-result {
+.apply-result {
     padding: 1rem;
     background-color: var(--deep-green);
     border-radius: 0.375rem;
@@ -2085,13 +2592,13 @@ h4 { font-size: 1.25rem; } /* 20px */
     font-size: 0.875rem;
 }
 
-.gemini-result h4 {
+.apply-result h4 {
     color: var(--text-color-white);
     font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
-.gemini-result .error-message {
+.apply-result .error-message {
     color: var(--signal-orange);
     font-weight: 700;
 }
@@ -2099,6 +2606,8 @@ h4 { font-size: 1.25rem; } /* 20px */
 .hidden {
     display: none;
 }
+
+
 
 /* ==== Футер ==== */
 .footer {
@@ -2111,20 +2620,47 @@ h4 { font-size: 1.25rem; } /* 20px */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    gap: 1.2rem;
+    text-align: center;
 }
 
 @media (min-width: 768px) {
     .footer-container {
         flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
     }
 }
 
-.footer-copy {
-    color: rgba(230, 216, 173, 0.8); /* khaki-light/80 */
-    text-align: center;
+/* Контакти */
+.footer-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
 }
+
+@media (min-width: 768px) {
+    .footer-contacts {
+        flex-direction: row;
+        gap: 1.2rem;
+    }
+}
+
+.footer-link {
+    color: var(--khaki-light); /* khaki-light/90 */
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity .25s ease;
+}
+
+.footer-link:hover {
+    opacity: 0.65;
+}
+
+.footer-copy {
+    color: var(--khaki-light);
+}
+
 
 /* ==== Допоміжний клас (тільки для зчитувачів екрану) ==== */
 .sr-only {
@@ -2137,144 +2673,4 @@ h4 { font-size: 1.25rem; } /* 20px */
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
-}
-/* ==== Contact (deep-green theme) ==== */
-#contact{
-    background: var(--deep-green); /* #2E3D2F */
-    padding: 5rem 1.5rem 4.5rem;
-    border-top: 1px solid rgba(230,216,173,.10);
-    border-bottom: 1px solid rgba(230,216,173,.10);
-}
-
-/* Заголовок секції */
-#contact .section-title{
-    color: var(--text-color-white);
-    text-align: center;
-    font-weight: 900;
-    letter-spacing: .2px;
-    margin-bottom: 2.25rem;
-}
-
-/* Дві колонки */
-#contact .contact-container{
-    display: grid;
-    grid-template-columns: 1.2fr .8fr;
-    gap: 2rem;
-}
-@media (max-width: 900px){
-    #contact .contact-container{ grid-template-columns: 1fr; }
-}
-
-/* “Картки” з легким підсвічуванням */
-#contact .contact-form-wrapper,
-#contact .contact-info{
-    background: rgba(0,0,0,.14);
-    border: 1px solid rgba(230,216,173,.14);
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 10px 24px rgba(0,0,0,.18);
-}
-
-/* Підзаголовки */
-#contact .contact-subtitle,
-#contact .contact-social-title{
-    color: var(--text-color-white);
-    font-weight: 800;
-    margin: 0 0 .75rem;
-}
-
-/* Текст */
-#contact p{
-    color: color-mix(in oklab, var(--khaki-light) 90%, white);
-}
-
-/* Поля форми */
-#contact .form-input{
-    width: 100%;
-    background: rgba(255,255,255,.04);
-    color: var(--khaki-light);
-    border: 1px solid var(--border-input);
-    border-radius: 12px;
-    padding: .85rem 1rem;
-    outline: none;
-    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
-}
-#contact .form-input::placeholder{
-    color: color-mix(in oklab, var(--khaki-light) 70%, white);
-}
-#contact .form-input:focus{
-    border-color: var(--sandstone);
-    box-shadow: 0 0 0 3px rgba(194,178,128,.25);
-    background: rgba(255,255,255,.06);
-}
-
-/* Блок з Gemini */
-#contact .gemini-feature{
-    background: rgba(255,255,255,.03);
-    border: 1px dashed rgba(230,216,173,.25);
-    border-radius: 12px;
-    padding: 1rem;
-    margin: .5rem 0 1rem;
-    color: color-mix(in oklab, var(--khaki-light) 88%, white);
-}
-#contact .gemini-status p{ margin: 0; }
-
-/* Кнопки у палітрі сайту */
-#contact .btn{
-    border-radius: 12px;
-    padding: .85rem 1.1rem;
-    font-weight: 700;
-    border: 1px solid transparent;
-}
-
-/* primary — помаранчевий акцент */
-#contact .btn-primary{
-    background: var(--signal-orange);
-    color: #fff;
-}
-#contact .btn-primary:hover{
-    filter: brightness(.95);
-}
-
-/* secondary — пісочний на темному */
-#contact .btn-secondary{
-    background: var(--sandstone);
-    color: var(--deep-green);
-}
-#contact .btn-secondary:hover{
-    filter: brightness(.95);
-}
-
-/* Контакти/посилання */
-#contact .contact-link{
-    display: inline-flex;
-    align-items: center;
-    gap: .6rem;
-    color: var(--khaki-light);
-    text-decoration: none;
-    border-bottom: 1px dashed rgba(230,216,173,.35);
-}
-#contact .contact-link:hover{
-    color: var(--sandstone);
-    border-bottom-color: var(--sandstone);
-}
-#contact .contact-icon{ font-size: 1.1rem; }
-
-
-/* Соціальні посилання */
-#contact .contact-social-links{
-    display: flex; flex-wrap: wrap; gap: .6rem;
-}
-#contact .social-link{
-    display: inline-block;
-    padding: .45rem .75rem;
-    border-radius: 10px;
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(230,216,173,.18);
-    color: var(--khaki-light);
-    text-decoration: none;
-}
-#contact .social-link:hover{
-    border-color: var(--sandstone);
-    background: rgba(255,255,255,.08);
 }

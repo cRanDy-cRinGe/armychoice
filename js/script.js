@@ -712,3 +712,282 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         });
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.faq-item');
+
+    items.forEach(item => {
+        const header = item.querySelector('.faq-header');
+        const body   = item.querySelector('.faq-body');
+
+        header.addEventListener('click', () => {
+            const isOpen = item.classList.contains('is-open');
+
+            // якщо хочеш, щоб відкривалось лише одне питання — розкоментуй:
+            // items.forEach(i => {
+            //     i.classList.remove('is-open');
+            //     i.querySelector('.faq-header').setAttribute('aria-expanded', 'false');
+            // });
+
+            if (!isOpen) {
+                item.classList.add('is-open');
+                header.setAttribute('aria-expanded', 'true');
+            } else {
+                item.classList.remove('is-open');
+                header.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const vacancyItems = document.querySelectorAll('.vacancy-item');
+
+    vacancyItems.forEach(item => {
+        const header = item.querySelector('.vacancy-row');
+        if (!header) return;
+
+        header.addEventListener('click', () => {
+            const isOpen = item.classList.contains('is-open');
+
+            // якщо хочеш режим «відкрита тільки одна картка» — раскоментуй блок нижче
+            // vacancyItems.forEach(i => {
+            //     i.classList.remove('is-open');
+            //     const btn = i.querySelector('.vacancy-row');
+            //     if (btn) btn.setAttribute('aria-expanded', 'false');
+            // });
+
+            if (!isOpen) {
+                item.classList.add('is-open');
+                header.setAttribute('aria-expanded', 'true');
+            } else {
+                item.classList.remove('is-open');
+                header.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const area = document.querySelector('.chevron-area');
+    const scrollZone = document.querySelector('.chevron-scroll-zone');
+    const chevrons = Array.from(document.querySelectorAll('.chevron'));
+
+    if (!area || !scrollZone || !chevrons.length) return;
+
+    let base = 0;                        // зсув по орбіті 0..1
+    const spacing = 1 / chevrons.length; // рівна відстань між шевронами
+
+    const autoSpeed = 0.01;              // базова повільна автошвидкість
+    let velocity = 0;                    // додаткова швидкість від колеса
+    const friction = 0.9;                // “тертя” — згасання швидкості
+
+    let lastTime = null;
+    let isHovered = false;
+
+    function render() {
+        // t для кожного шеврона
+        const tValues = chevrons.map((_, index) => {
+            let t = base + index * spacing;
+            t = t - Math.floor(t); // 0..1
+            return t;
+        });
+
+        // шукаємо той, що найближче до центру (0.5)
+        let centerIdx = 0;
+        let bestDist = 1;
+        tValues.forEach((t, i) => {
+            const d = Math.abs(t - 0.5);
+            if (d < bestDist) {
+                bestDist = d;
+                centerIdx = i;
+            }
+        });
+
+        chevrons.forEach((el, index) => {
+            const t = tValues[index];
+            const dist = t * 100;
+            el.style.offsetDistance = dist + '%';
+
+            // базова поява / зникнення по краях
+            let baseOpacity;
+            if (t < 0.05 || t > 0.95) {
+                baseOpacity = 0;
+            } else if (t < 0.15) {
+                baseOpacity = (t - 0.05) / 0.10;      // fade-in
+            } else if (t > 0.85) {
+                baseOpacity = (0.95 - t) / 0.10;     // fade-out
+            } else {
+                baseOpacity = 1;
+            }
+
+            const isCenter = index === centerIdx;
+
+            // наскільки близько до центру (0..1)
+            const centerFactor = 1 - Math.abs(t - 0.5) / 0.5;
+            const emphasis = Math.pow(centerFactor, 1.4);
+
+            // ==== РОЗМІР ====
+            let scale;
+            if (isCenter) {
+                // центральний — найкрупніший
+                scale = 1.9;
+            } else {
+                const minScale = 0.95;
+                const bonus = 0.18;
+                scale = minScale + bonus * emphasis;
+            }
+
+            // ==== ПРОЗОРІСТЬ ====
+            let opacity;
+            if (isCenter) {
+                // центральний — непрозорий (з урахуванням fade-in/out по краях)
+                opacity = baseOpacity;
+                if (opacity > 0.85) opacity = 1;
+            } else {
+                // інші напівпрозорі
+                opacity = baseOpacity * 0.45;
+            }
+            el.style.opacity = opacity;
+
+            // ==== КОЛІР / ЯСКРАВІСТЬ ====
+            if (opacity <= 0) {
+                el.style.filter = 'none';
+            } else {
+                if (isCenter) {
+                    // центральний: нормальний, при hover — трохи яскравіший
+                    const bright = isHovered ? 1.18 : 1.0;
+                    el.style.filter = `brightness(${bright.toFixed(2)})`;
+                } else {
+                    // інші — затемнені й трохи менш контрастні
+                    const dimBright = 0.55; // загальне затемнення
+                    el.style.filter = `brightness(${dimBright})`;
+                }
+            }
+
+            // hover тільки додає трошки масштабу зверху
+            if (isHovered) {
+                scale += isCenter ? 0.06 : 0.02;
+            }
+
+            el.style.transform = `scale(${scale})`;
+        });
+    }
+
+    function tick(timestamp) {
+        if (lastTime == null) lastTime = timestamp;
+        const dt = (timestamp - lastTime) / 1000;
+        lastTime = timestamp;
+
+        // інерція від колеса + авто-рух
+        velocity *= Math.pow(friction, dt * 60); // згасання
+        base += (autoSpeed + velocity) * dt;
+        base = base - Math.floor(base); // тримаємо 0..1
+
+        render();
+        requestAnimationFrame(tick);
+    }
+
+    render();
+    requestAnimationFrame(tick);
+
+    // hover – коли курсор реально над зоною прокрутки
+    scrollZone.addEventListener('mouseenter', () => {
+        isHovered = true;
+    });
+
+    scrollZone.addEventListener('mouseleave', () => {
+        isHovered = false;
+    });
+
+    // колесо працює тільки над scrollZone і дає "поштовх" швидкості
+    scrollZone.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const delta = e.deltaY || e.wheelDelta || 0;
+        const direction = delta > 0 ? 1 : -1;
+
+        velocity += direction * 0.4; // імпульс
+    }, { passive: false });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const TOP_OFFSET   = 20;   // відступ зверху всередині SVG (чим більший – тим нижче вся крива)
+    const ORBIT_HEIGHT = 720;  // висота кривої (від верхньої до нижньої точки)
+
+    // співвідношення положення контрольної точки по Y (було 320/700 в оригінальному шляху)
+    const CTRL_Y_K = 320 / 700;
+
+    const svg = document.querySelector('.chevron-path');
+    if (!svg) return;
+
+    const ns    = 'http://www.w3.org/2000/svg';
+    const yTop  = TOP_OFFSET;
+    const yBot  = TOP_OFFSET + ORBIT_HEIGHT;
+    const yCtrl = yTop + ORBIT_HEIGHT * CTRL_Y_K;
+
+    // геометрія орбіт (X старту/кінця й X контрольної точки)
+    const orbitDefs = [
+        { selector: '.orbit-outer-2', x: 500, cx: 260 },
+        { selector: '.orbit-outer-1', x: 520, cx: 300 },
+        { selector: '.orbit-main',    x: 540, cx: 340 }, // головна, по ній їдуть шеврони
+        { selector: '.orbit-inner-1', x: 560, cx: 380 },
+        { selector: '.orbit-inner-2', x: 580, cx: 420 }
+    ];
+
+    // 1) ОНОВЛЮЄМО d у всіх <path class="orbit ...">
+    orbitDefs.forEach(o => {
+        const p = svg.querySelector(o.selector);
+        if (!p) return;
+
+        const d = `M ${o.x} ${yTop} Q ${o.cx} ${yCtrl} ${o.x} ${yBot}`;
+        p.setAttribute('d', d);
+    });
+
+    // 2) ПЕРЕБУДОВУЄМО КРАПКИ (щоб вони йшли по новій геометрії)
+    svg.querySelectorAll('.orbit-dots').forEach(g => g.remove());
+
+    orbitDefs.forEach((o, index) => {
+        const path = svg.querySelector(o.selector);
+        if (!path) return;
+
+        const length = path.getTotalLength();
+        const bbox   = path.getBBox();
+        const minX   = bbox.x;
+        const maxX   = bbox.x + bbox.width;
+
+        const STEP       = 16; // щільність крапок
+        const dotsCount  = Math.max(10, Math.floor(length / STEP));
+        const group      = document.createElementNS(ns, 'g');
+
+        group.classList.add('orbit-dots', `orbit-dots-${index}`);
+        svg.appendChild(group);
+
+        for (let i = 0; i <= dotsCount; i++) {
+            const t  = i / dotsCount;
+            const pt = path.getPointAtLength(length * t);
+
+            const nx = (pt.x - minX) / (maxX - minX); // 0..1 зліва->праворуч
+
+            const baseR  = 1.0 + index * 0.2;
+            const extraR = 2.4 + index * 0.3;
+            const r      = baseR + extraR * nx;
+
+            const c = document.createElementNS(ns, 'circle');
+            c.setAttribute('cx', pt.x);
+            c.setAttribute('cy', pt.y);
+            c.setAttribute('r', r.toFixed(2));
+            group.appendChild(c);
+        }
+    });
+
+    // 3) ОНОВЛЮЄМО offset-path ДЛЯ ШЕВРОНІВ (щоб їхня траєкторія збігалася з головною орбітою)
+    const mainOrbit = svg.querySelector('.orbit-main');
+    if (mainOrbit) {
+        const dMain        = mainOrbit.getAttribute('d');
+        const offsetPath   = `path("${dMain}")`;
+        const chevrons     = document.querySelectorAll('.chevron');
+
+        chevrons.forEach(ch => {
+            ch.style.offsetPath = offsetPath;
+        });
+    }
+});
