@@ -103,11 +103,11 @@
             <div class="about-head">
                 <h2 class="about-overline">Про нас</h2>
                 <h3 class="section-title about-title">Рекрутинг, який працює чесно</h3>
-                <p class="section-subtitle-center about-subtitle">
+                <h3 class="section-subtitle-center about-subtitle">
                     <strong>ArmyChoice</strong> — це рекрутинговий підрозділ при Шевченківському РТЦК та СП м. Львова.
                     Ми допомагаємо кандидатам обрати військову частину відповідно до їхнього досвіду, мотивації та бажань.
                     Працюємо прозоро, супроводжуємо на всіх етапах і гарантуємо підписання контракту саме з обраною частиною.
-                </p>
+                </h3>
             </div>
 
             <div class="grid-3 about-features">
@@ -225,7 +225,6 @@
 
 
 
-    <!-- ==== Рекрутинг vs Мобілізація (Neo) ==== -->
     <section id="compare" class="section compare neo">
         <div class="container">
             <h2 class="compare-title">
@@ -234,64 +233,77 @@
             </h2>
 
             <div class="compare-cols">
-                <!-- Рекрутинг -->
                 <div class="compare-col recruit">
-                    <h3 class="compare-col-title">Рекрутинг</h3>
+                    <div class="col-header">
+                        <h3 class="compare-col-title">Рекрутинг</h3>
+                        <span class="col-badge">Твій вибір</span>
+                    </div>
+
                     <ul class="compare-list">
-                        <li class="compare-item">
-                            <span class="ico-check"></span>
+                        <li class="compare-item positive">
+                            <div class="ico-box">
+                                <span class="ico-check"></span>
+                            </div>
                             <div><strong>Добровільно</strong><br>Людина самостійно звертається та ухвалює рішення про службу.</div>
                         </li>
-                        <li class="compare-item">
-                            <span class="ico-check"></span>
-                            <div><strong>Право вибору бригади та посади</strong><br>Кандидат обирає підрозділ відповідно до своїх бажань і навичок.</div>
+                        <li class="compare-item positive">
+                            <div class="ico-box">
+                                <span class="ico-check"></span>
+                            </div>
+                            <div><strong>Право вибору бригади</strong><br>Кандидат обирає підрозділ відповідно до своїх бажань і навичок.</div>
                         </li>
-                        <li class="compare-item">
-                            <span class="ico-check"></span>
-                            <div><strong>Прямий зв’язок з командиром</strong><br>Організовуємо комунікацію з обраною бригадою до підписання контракту.</div>
+                        <li class="compare-item positive">
+                            <div class="ico-box">
+                                <span class="ico-check"></span>
+                            </div>
+                            <div><strong>Прямий зв’язок</strong><br>Організовуємо комунікацію з обраною бригадою до підписання контракту.</div>
                         </li>
-                        <li class="compare-item">
-                            <span class="ico-check"></span>
-                            <div><strong>Прозора інформація про умови</strong><br>Кандидат заздалегідь знає умови служби, завдання підрозділу й посаду.</div>
-                        </li>
-                        <li class="compare-item">
-                            <span class="ico-check"></span>
+                        <li class="compare-item positive">
+                            <div class="ico-box">
+                                <span class="ico-check"></span>
+                            </div>
                             <div><strong>Повний супровід</strong><br>Консультації, документи, ВЛК, контракт — ведемо на всіх етапах.</div>
-                        </li>
-                        <li class="compare-item">
-                            <span class="ico-check"></span>
-                            <div><strong>Плановане рішення</strong><br>Людина сама визначає час і напрямок служби.</div>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Мобілізація -->
                 <div class="compare-col mobilization">
-                    <h3 class="compare-col-title">Мобілізація</h3>
+                    <div class="col-header">
+                        <h3 class="compare-col-title">Мобілізація</h3>
+                    </div>
+
                     <ul class="compare-list">
-                        <li class="compare-item">
-                            <span class="ico-check is-negative"></span>
-                            <div><strong>Не добровільно</strong><br>Рішення ухвалюється державою у межах законодавства.</div>
+                        <li class="compare-item negative">
+                            <div class="ico-box">
+                                <span class="ico-cross"></span>
+                            </div>
+                            <div><strong>Не добровільно</strong><br>Рішення ухвалюється державою, без врахування ваших побажань.</div>
                         </li>
-                        <li class="compare-item">
-                            <span class="ico-check is-negative"></span>
-                            <div><strong>Без вибору підрозділу</strong><br>Направлення відбувається відповідно до потреб ЗСУ.</div>
+                        <li class="compare-item negative">
+                            <div class="ico-box">
+                                <span class="ico-cross"></span>
+                            </div>
+                            <div><strong>Лотерея з підрозділом</strong><br>Направлення відбувається туди, де є потреба, а не туди, де ви хочете.</div>
                         </li>
-                        <li class="compare-item">
-                            <span class="ico-check is-negative"></span>
-                            <div><strong>Інший порядок ВЛК та документів</strong><br>Процес проходить за мобілізаційною процедурою.</div>
+                        <li class="compare-item negative">
+                            <div class="ico-box">
+                                <span class="ico-cross"></span>
+                            </div>
+                            <div><strong>Невідомість</strong><br>Ви дізнаєтесь про посаду та умови служби вже по факту прибуття.</div>
                         </li>
-                        <li class="compare-item">
-                            <span class="ico-check is-negative"></span>
-                            <div><strong>Обмежена інформація</strong><br>Людину направляють одразу за потребами оборони.</div>
+                        <li class="compare-item negative">
+                            <div class="ico-box">
+                                <span class="ico-cross"></span>
+                            </div>
+                            <div><strong>Стрес та черги</strong><br>Загальна процедура проходження ВЛК та оформлення документів.</div>
                         </li>
                     </ul>
                 </div>
             </div>
 
             <p class="compare-note">
-                <strong class="note-rect">Рекрутинг</strong> — це добровільний шлях із можливістю самостійно обрати військову частину та спеціальність.<br>
-                <strong class="note-mob">Мобілізація</strong> — державний процес, який не передбачає вибору.
+                <strong class="note-rect">Рекрутинг</strong> — це свідомий шлях воїна.<br>
+                <strong class="note-mob">Мобілізація</strong> — це виконання обов'язку за розподілом.
             </p>
         </div>
     </section>
@@ -457,6 +469,89 @@
 
 
 
+
+
+    <!-- ==== FAQ / Питання ==== -->
+    <section id="faq" class="section faq">
+        <div class="container">
+            <h2 class="faq-title">Запитання, які нам ставлять найчастіше</h2>
+
+            <ol class="faq-list">
+                <li class="faq-item">
+                    <button class="faq-header" type="button" aria-expanded="false">
+                        <h3 class="faq-q">Чи можу я сам обрати бригаду?</h3>
+                        <span class="faq-toggle" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-body">
+                        <p class="faq-a">
+                            Так. Ми працюємо з різними підрозділами, і ви самі обираєте бригаду та напрям служби.
+                            Ми лише допомагаємо зробити правильний вибір.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="faq-item">
+                    <button class="faq-header" type="button" aria-expanded="false">
+                        <h3 class="faq-q">Чи можуть мене перевести в іншу частину?</h3>
+                        <span class="faq-toggle" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-body">
+                        <p class="faq-a">
+                            Ні. Ми гарантуємо супровід та підписання контракту саме з тією військовою частиною, яку ви обрали.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="faq-item">
+                    <button class="faq-header" type="button" aria-expanded="false">
+                        <h3 class="faq-q">Скільки часу триває процес від першого звернення до контракту?</h3>
+                        <span class="faq-toggle" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-body">
+                        <p class="faq-a">
+                            У середньому від 10 до 30 днів — залежно від швидкості проходження ВЛК та оформлення документів.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="faq-item">
+                    <button class="faq-header" type="button" aria-expanded="false">
+                        <h3 class="faq-q">Чи потрібен досвід служби?</h3>
+                        <span class="faq-toggle" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-body">
+                        <p class="faq-a">
+                            Ні. Є багато посад, які не потребують військового досвіду. Якщо досвід є — ми підберемо позицію під ваші навички.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="faq-item">
+                    <button class="faq-header" type="button" aria-expanded="false">
+                        <h3 class="faq-q">Чи можу я обрати конкретну посаду?</h3>
+                        <span class="faq-toggle" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-body">
+                        <p class="faq-a">
+                            Так. Ми узгоджуємо посаду з бригадою до підписання контракту.
+                        </p>
+                    </div>
+                </li>
+
+                <li class="faq-item">
+                    <button class="faq-header" type="button" aria-expanded="false">
+                        <h3 class="faq-q">Чи потрібно проходити військову підготовку?</h3>
+                        <span class="faq-toggle" aria-hidden="true"></span>
+                    </button>
+                    <div class="faq-body">
+                        <p class="faq-a">
+                            Так. Після оформлення документів усі проходять 45-денний курс базової загальної військової підготовки.
+                        </p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </section>
     <!-- ==== Відгуки / Testimonial Hero ==== -->
     <section id="reviews" class="testi-section">
         <div class="container">
@@ -602,89 +697,6 @@
             </div>
         </div>
     </section>
-
-    <!-- ==== FAQ / Питання ==== -->
-    <section id="faq" class="section faq">
-        <div class="container">
-            <h2 class="faq-title">Запитання, які нам ставлять найчастіше</h2>
-
-            <ol class="faq-list">
-                <li class="faq-item">
-                    <button class="faq-header" type="button" aria-expanded="false">
-                        <h3 class="faq-q">Чи можу я сам обрати бригаду?</h3>
-                        <span class="faq-toggle" aria-hidden="true"></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-a">
-                            Так. Ми працюємо з різними підрозділами, і ви самі обираєте бригаду та напрям служби.
-                            Ми лише допомагаємо зробити правильний вибір.
-                        </p>
-                    </div>
-                </li>
-
-                <li class="faq-item">
-                    <button class="faq-header" type="button" aria-expanded="false">
-                        <h3 class="faq-q">Чи можуть мене перевести в іншу частину?</h3>
-                        <span class="faq-toggle" aria-hidden="true"></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-a">
-                            Ні. Ми гарантуємо супровід та підписання контракту саме з тією військовою частиною, яку ви обрали.
-                        </p>
-                    </div>
-                </li>
-
-                <li class="faq-item">
-                    <button class="faq-header" type="button" aria-expanded="false">
-                        <h3 class="faq-q">Скільки часу триває процес від першого звернення до контракту?</h3>
-                        <span class="faq-toggle" aria-hidden="true"></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-a">
-                            У середньому від 10 до 30 днів — залежно від швидкості проходження ВЛК та оформлення документів.
-                        </p>
-                    </div>
-                </li>
-
-                <li class="faq-item">
-                    <button class="faq-header" type="button" aria-expanded="false">
-                        <h3 class="faq-q">Чи потрібен досвід служби?</h3>
-                        <span class="faq-toggle" aria-hidden="true"></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-a">
-                            Ні. Є багато посад, які не потребують військового досвіду. Якщо досвід є — ми підберемо позицію під ваші навички.
-                        </p>
-                    </div>
-                </li>
-
-                <li class="faq-item">
-                    <button class="faq-header" type="button" aria-expanded="false">
-                        <h3 class="faq-q">Чи можу я обрати конкретну посаду?</h3>
-                        <span class="faq-toggle" aria-hidden="true"></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-a">
-                            Так. Ми узгоджуємо посаду з бригадою до підписання контракту.
-                        </p>
-                    </div>
-                </li>
-
-                <li class="faq-item">
-                    <button class="faq-header" type="button" aria-expanded="false">
-                        <h3 class="faq-q">Чи потрібно проходити військову підготовку?</h3>
-                        <span class="faq-toggle" aria-hidden="true"></span>
-                    </button>
-                    <div class="faq-body">
-                        <p class="faq-a">
-                            Так. Після оформлення документів усі проходять 45-денний курс базової загальної військової підготовки.
-                        </p>
-                    </div>
-                </li>
-            </ol>
-        </div>
-    </section>
-
 
     <!-- ==== Контакти ==== -->
     <section id="contact" class="section bg-camouflage-green">

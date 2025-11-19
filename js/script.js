@@ -767,108 +767,202 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    /* =========================================
+       1. МАЛЮВАННЯ ОРБІТ (Desktop)
+    ========================================= */
+    const TOP_OFFSET   = 20;
+    const ORBIT_HEIGHT = 720;
+    const CTRL_Y_K = 320 / 700;
+
+    const svg = document.querySelector('.chevron-path');
+    const ns  = 'http://www.w3.org/2000/svg';
+
+    if (svg) {
+        const yTop  = TOP_OFFSET;
+        const yBot  = TOP_OFFSET + ORBIT_HEIGHT;
+        const yCtrl = yTop + ORBIT_HEIGHT * CTRL_Y_K;
+
+        const orbitDefs = [
+            { selector: '.orbit-outer-2', x: 500, cx: 260 },
+            { selector: '.orbit-outer-1', x: 520, cx: 300 },
+            { selector: '.orbit-main',    x: 540, cx: 340 },
+            { selector: '.orbit-inner-1', x: 560, cx: 380 },
+            { selector: '.orbit-inner-2', x: 580, cx: 420 }
+        ];
+
+        orbitDefs.forEach(o => {
+            const p = svg.querySelector(o.selector);
+            if (!p) return;
+            const d = `M ${o.x} ${yTop} Q ${o.cx} ${yCtrl} ${o.x} ${yBot}`;
+            p.setAttribute('d', d);
+        });
+
+        svg.querySelectorAll('.orbit-dots').forEach(g => g.remove());
+
+        if (window.innerWidth >= 900) {
+            orbitDefs.forEach((o, index) => {
+                const path = svg.querySelector(o.selector);
+                if (!path) return;
+
+                const length = path.getTotalLength();
+                const bbox   = path.getBBox();
+                const minX   = bbox.x;
+                const maxX   = bbox.x + bbox.width;
+
+                const STEP       = 16;
+                const dotsCount  = Math.max(10, Math.floor(length / STEP));
+                const group      = document.createElementNS(ns, 'g');
+
+                group.classList.add('orbit-dots', `orbit-dots-${index}`);
+                svg.appendChild(group);
+
+                for (let i = 0; i <= dotsCount; i++) {
+                    const t  = i / dotsCount;
+                    const pt = path.getPointAtLength(length * t);
+                    const nx = (pt.x - minX) / (maxX - minX);
+
+                    const baseR  = 1.0 + index * 0.2;
+                    const extraR = 2.4 + index * 0.3;
+                    const r      = baseR + extraR * nx;
+
+                    const c = document.createElementNS(ns, 'circle');
+                    c.setAttribute('cx', pt.x);
+                    c.setAttribute('cy', pt.y);
+                    c.setAttribute('r', r.toFixed(2));
+                    group.appendChild(c);
+                }
+            });
+        }
+    }
+
+    /* =========================================
+       2. ЛОГІКА СЛАЙДЕРА
+    ========================================= */
     const area = document.querySelector('.chevron-area');
     const scrollZone = document.querySelector('.chevron-scroll-zone');
     const chevrons = Array.from(document.querySelectorAll('.chevron'));
+    const mainOrbit = document.querySelector('.orbit-main');
 
     if (!area || !scrollZone || !chevrons.length) return;
 
-    let base = 0;                        // зсув по орбіті 0..1
-    const spacing = 1 / chevrons.length; // рівна відстань між шевронами
+    let base = 0;
+    const spacing = 1 / chevrons.length;
 
-    const autoSpeed = 0.01;              // базова повільна автошвидкість
-    let velocity = 0;                    // додаткова швидкість від колеса
-    const friction = 0.9;                // “тертя” — згасання швидкості
+    // === НАЛАШТУВАННЯ ШВИДКОСТІ ===
+    // Було 0.08, ставимо 0.04 (в 2 рази повільніше)
+    const autoSpeed = 0.04;
+    let velocity = 0;
+    const friction = 0.95;
 
     let lastTime = null;
     let isHovered = false;
 
     function render() {
-        // t для кожного шеврона
+        const isMobile = window.innerWidth < 900;
+        const width = area.clientWidth;
+
+        let desktopPathStr = 'none';
+        if (mainOrbit) {
+            const dAttr = mainOrbit.getAttribute('d');
+            if (dAttr) desktopPathStr = `path("${dAttr}")`;
+        }
+
         const tValues = chevrons.map((_, index) => {
             let t = base + index * spacing;
-            t = t - Math.floor(t); // 0..1
+            t = t - Math.floor(t);
             return t;
         });
 
-        // шукаємо той, що найближче до центру (0.5)
         let centerIdx = 0;
         let bestDist = 1;
-        tValues.forEach((t, i) => {
-            const d = Math.abs(t - 0.5);
-            if (d < bestDist) {
-                bestDist = d;
-                centerIdx = i;
-            }
-        });
+        if (!isMobile) {
+            tValues.forEach((t, i) => {
+                const d = Math.abs(t - 0.5);
+                if (d < bestDist) { bestDist = d; centerIdx = i; }
+            });
+        }
 
         chevrons.forEach((el, index) => {
             const t = tValues[index];
-            const dist = t * 100;
-            el.style.offsetDistance = dist + '%';
 
-            // базова поява / зникнення по краях
-            let baseOpacity;
-            if (t < 0.05 || t > 0.95) {
-                baseOpacity = 0;
-            } else if (t < 0.15) {
-                baseOpacity = (t - 0.05) / 0.10;      // fade-in
-            } else if (t > 0.85) {
-                baseOpacity = (0.95 - t) / 0.10;     // fade-out
-            } else {
-                baseOpacity = 1;
-            }
-
-            const isCenter = index === centerIdx;
-
-            // наскільки близько до центру (0..1)
-            const centerFactor = 1 - Math.abs(t - 0.5) / 0.5;
-            const emphasis = Math.pow(centerFactor, 1.4);
-
-            // ==== РОЗМІР ====
-            let scale;
-            if (isCenter) {
-                // центральний — найкрупніший
-                scale = 1.9;
-            } else {
-                const minScale = 0.95;
-                const bonus = 0.18;
-                scale = minScale + bonus * emphasis;
-            }
-
-            // ==== ПРОЗОРІСТЬ ====
-            let opacity;
-            if (isCenter) {
-                // центральний — непрозорий (з урахуванням fade-in/out по краях)
-                opacity = baseOpacity;
-                if (opacity > 0.85) opacity = 1;
-            } else {
-                // інші напівпрозорі
-                opacity = baseOpacity * 0.45;
-            }
-            el.style.opacity = opacity;
-
-            // ==== КОЛІР / ЯСКРАВІСТЬ ====
-            if (opacity <= 0) {
+            if (isMobile) {
+                // ---- MOBILE (горизонтально) ----
+                el.style.offsetPath = 'none';
+                el.style.offsetDistance = '0%';
+                el.style.opacity = 1;
                 el.style.filter = 'none';
+
+                const itemWidth = 90;
+                const totalTravel = width + itemWidth * 2;
+                const xPos = (1 - t) * totalTravel - itemWidth;
+
+                el.style.transform = `translateX(${xPos}px) scale(0.9)`;
+
             } else {
-                if (isCenter) {
-                    // центральний: нормальний, при hover — трохи яскравіший
-                    const bright = isHovered ? 1.18 : 1.0;
-                    el.style.filter = `brightness(${bright.toFixed(2)})`;
-                } else {
-                    // інші — затемнені й трохи менш контрастні
-                    const dimBright = 0.55; // загальне затемнення
-                    el.style.filter = `brightness(${dimBright})`;
+                // ---- DESKTOP (орбіта) ----
+                el.style.offsetPath = desktopPathStr;
+
+                const dist = t * 100;
+                el.style.offsetDistance = dist + '%';
+
+                // === НОВА ЛОГІКА ПРОЗОРОСТІ (Щоб не вилазило) ===
+                let baseOpacity;
+
+                // 1. Повністю ховаємо раніше (t > 0.88) і тримаємо схованим на самому старті (t < 0.02)
+                if (t < 0.02 || t > 0.88) {
+                    baseOpacity = 0;
                 }
-            }
+                // 2. Поява зверху (швидше): від 0.02 до 0.12
+                else if (t < 0.12) {
+                    baseOpacity = (t - 0.02) / 0.10;
+                }
+                // 3. Зникнення знизу (раніше): починаємо ховати на 0.75, повністю зникає на 0.88
+                else if (t > 0.75) {
+                    baseOpacity = (0.88 - t) / 0.13;
+                }
+                // 4. Середина - повністю видно
+                else {
+                    baseOpacity = 1;
+                }
 
-            // hover тільки додає трошки масштабу зверху
-            if (isHovered) {
-                scale += isCenter ? 0.06 : 0.02;
-            }
+                const isCenter = index === centerIdx;
+                const centerFactor = 1 - Math.abs(t - 0.5) / 0.5;
+                const emphasis = Math.pow(centerFactor, 1.4);
 
-            el.style.transform = `scale(${scale})`;
+                let scale;
+                if (isCenter) {
+                    scale = 1.9;
+                } else {
+                    const minScale = 0.95;
+                    const bonus = 0.18;
+                    scale = minScale + bonus * emphasis;
+                }
+
+                let opacity;
+                if (isCenter) {
+                    opacity = baseOpacity;
+                    if (opacity > 0.85) opacity = 1;
+                } else {
+                    opacity = baseOpacity * 0.45;
+                }
+                el.style.opacity = opacity;
+
+                if (opacity <= 0) {
+                    el.style.filter = 'none';
+                } else {
+                    if (isCenter) {
+                        const bright = isHovered ? 1.18 : 1.0;
+                        el.style.filter = `brightness(${bright.toFixed(2)})`;
+                    } else {
+                        el.style.filter = `brightness(0.55)`;
+                    }
+                }
+
+                if (isHovered) {
+                    scale += isCenter ? 0.06 : 0.02;
+                }
+                el.style.transform = `scale(${scale})`;
+            }
         });
     }
 
@@ -877,37 +971,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const dt = (timestamp - lastTime) / 1000;
         lastTime = timestamp;
 
-        // інерція від колеса + авто-рух
-        velocity *= Math.pow(friction, dt * 60); // згасання
-        base += (autoSpeed + velocity) * dt;
-        base = base - Math.floor(base); // тримаємо 0..1
+        const isMobile = window.innerWidth < 900;
+        const speedMultiplier = isMobile ? 0.15 : 1;
+
+        velocity *= Math.pow(friction, dt * 60);
+        base += (autoSpeed * speedMultiplier + velocity) * dt;
+        base = base - Math.floor(base);
 
         render();
         requestAnimationFrame(tick);
     }
 
-    render();
     requestAnimationFrame(tick);
 
-    // hover – коли курсор реально над зоною прокрутки
-    scrollZone.addEventListener('mouseenter', () => {
-        isHovered = true;
-    });
+    scrollZone.addEventListener('mouseenter', () => { isHovered = true; });
+    scrollZone.addEventListener('mouseleave', () => { isHovered = false; });
 
-    scrollZone.addEventListener('mouseleave', () => {
-        isHovered = false;
-    });
-
-    // колесо працює тільки над scrollZone і дає "поштовх" швидкості
     scrollZone.addEventListener('wheel', (e) => {
+        if (window.innerWidth < 900) return;
         e.preventDefault();
         e.stopPropagation();
-
         const delta = e.deltaY || e.wheelDelta || 0;
         const direction = delta > 0 ? 1 : -1;
-
-        velocity += direction * 0.4; // імпульс
+        velocity += direction * 0.4;
     }, { passive: false });
+
+    window.addEventListener('resize', () => {});
 });
 document.addEventListener('DOMContentLoaded', () => {
     const TOP_OFFSET   = 20;   // відступ зверху всередині SVG (чим більший – тим нижче вся крива)
@@ -990,4 +1079,67 @@ document.addEventListener('DOMContentLoaded', () => {
             ch.style.offsetPath = offsetPath;
         });
     }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    /* =========================
+       Smooth Reveal on Scroll (Instant trigger)
+    ==========================*/
+
+    const selectorsToAnimate = [
+        'h1', 'h2', 'h3',
+        '.hero-subtitle', '.hero-btn-con', '.hero-image-container',
+        '.feature-card',
+        '.path-head', '.step', '.path-right',
+        '.compare-col', '.compare-note',
+        '.vacancies-title', '.vacancies-subtitle',
+        '.vacancy-item',
+        '.faq-title', '.faq-item',
+        '.testi-title', '.testi-slider',
+        '.contact-wrapper'
+    ];
+
+    const elements = document.querySelectorAll(selectorsToAnimate.join(','));
+
+    // === ОНОВЛЕНІ НАЛАШТУВАННЯ ===
+    const observerOptions = {
+        root: null,
+        // rootMargin: '0px' означає, що ми дивимось рівно по краях екрану.
+        // Можна поставити '0px 0px -20px 0px', якщо хочеш малесеньку затримку, 
+        // але '0px' дасть миттєвий ефект появи.
+        rootMargin: '0px',
+
+        // threshold: 0.01 означає, що анімація запуститься, 
+        // як тільки 1% елемента з'явиться в кадрі (тобто майже одразу).
+        threshold: 0.01
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    elements.forEach((el) => {
+        el.classList.add('reveal-on-scroll');
+
+        // Логіка "черги" (stagger)
+        const parent = el.parentElement;
+        if (parent) {
+            const siblings = Array.from(parent.children).filter(child =>
+                child.classList.contains('reveal-on-scroll')
+            );
+            const indexInGroup = siblings.indexOf(el);
+
+            if (indexInGroup > 0 && siblings.length > 1) {
+                const delay = Math.min(indexInGroup * 100, 300);
+                el.dataset.delay = delay;
+            }
+        }
+
+        observer.observe(el);
+    });
 });
