@@ -172,7 +172,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;
-    border-radius: 0.375rem; /* 6px */
+    border-radius: 1px; /* 6px */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
     border: none;
@@ -286,7 +286,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     color: var(--text-color);
     background-color: transparent;
     border: none;
-    border-radius: 0.375rem;
+    border-radius: 1px;
 }
 
 @media (min-width: 768px) {
@@ -316,7 +316,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 .mobile-link {
     display: block;
     padding: 0.75rem 1rem;
-    border-radius: 0.375rem;
+    border-radius: 1px;
     font-weight: 500;
 }
 
@@ -476,7 +476,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     margin-inline: auto;
     backdrop-filter: blur(2px);
     padding: clamp(0rem, 1vw, 0.75rem);
-    border-radius: 16px;
+    border-radius: 1px;
 }
 
 @media (min-width: 1024px) {
@@ -566,7 +566,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 
 .hero-frame {
     position: relative;
-    border-radius: 18px;
+    border-radius: 1px;
     overflow: hidden;
     transform: translateZ(0);
     max-height: 650px;
@@ -643,7 +643,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     bottom: 12px;
     left: 12px;
     padding: .5rem .8rem;
-    border-radius: 16px;
+    border-radius: 1px;
     background: rgba(255,255,255,.18);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -761,7 +761,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     background: rgba(57, 57, 57, 0.7);
     /*background: linear-gradient(180deg, rgba(230,216,173,.06), rgba(230,216,173,.03));*/
     border: 2px solid var(--border-color);
-    border-radius: 1rem;
+    border-radius: 1px;
     padding: 1.75rem 1.5rem;
     transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
@@ -775,7 +775,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 .feature-icon {
     width: 72px;
     height: 72px;
-    border-radius: 16px;
+    border-radius: 1px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -805,7 +805,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     position: relative;
     isolation: isolate;
     border: 2px solid color-mix(in srgb, var(--sandstone) 38%, transparent);
-    border-radius: 6px;
+    border-radius: 1px;
     padding: 1.9rem 1.6rem;
     backdrop-filter: blur(14px) saturate(118%);
     -webkit-backdrop-filter: blur(14px) saturate(118%);
@@ -913,7 +913,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 .card {
     background-color: var(--deep-green);
     padding: 2rem;
-    border-radius: 0.5rem;
+    border-radius: 1px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     border: 1px solid var(--border-color);
     transition: transform 0.3s ease, border-color 0.3s ease;
@@ -979,7 +979,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 
 /* права картка: glass */
 .step-card{
-    border-radius:16px; padding:18px 20px;
+    border-radius:1px; padding:18px 20px;
     background:linear-gradient(180deg,
     color-mix(in srgb, var(--khaki-light) 7%, transparent),
     color-mix(in srgb, var(--camouflage-green) 22%, transparent));
@@ -1297,7 +1297,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     font-weight: 800;
     text-transform: uppercase;
     padding: 5px 10px;
-    border-radius: 6px;
+    border-radius: 1px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     animation: pulseBadge 2s infinite;
 }
@@ -1324,7 +1324,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     align-items: flex-start;
     gap: 1rem;
     padding: 1.25rem;
-    border-radius: 12px;
+    border-radius: 1px;
     line-height: 1.6;
     transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     opacity: 0;
@@ -1344,7 +1344,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     position: absolute;
     left: 0; top: 0; bottom: 0; /* Лінія по всій висоті */
     width: 6px; /* Ширина лінії */
-    border-radius: 12px 0 0 12px; /* Згладжені краї лише зліва */
+    border-radius: 1px 0 0 1px; /* Згладжені краї лише зліва */
     opacity: 0.9;
     transition: width 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
     pointer-events: none; /* Щоб не перекривало кліки */
@@ -1569,7 +1569,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     position: relative;
     width: 110%;
     box-sizing: border-box;
-    border-radius: 16px;
+    border-radius: 1px;
     background: #222222; /* темно-сірий, не чорний */
     border: 1px solid rgba(230,216,173,0.22);
     box-shadow: 0 8px 18px rgba(0,0,0,.18);
@@ -1600,7 +1600,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     padding: 14px 18px;
     background: transparent;
     border: none;
-    border-radius: 16px;
+    border-radius: 1px;
     cursor: pointer;
 }
 
@@ -1640,7 +1640,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 
 .vacancy-type {
     padding: .25rem .75rem;
-    border-radius: 999px;
+    border-radius: 1px;
     font-size: .78rem;
     text-transform: uppercase;
     letter-spacing: .06em;
@@ -1711,7 +1711,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     transform: translateY(-6px);
     background: #1b1b1b; /* темний сірий для розкритої частини */
     border-top: 1px solid rgba(218, 218, 218, 0.4);
-    border-radius: 0 0 16px 16px;
+    border-radius: 0 0 1px 1px;
     transition:
             max-height 0.5s ease,
             opacity 0.4s ease,
@@ -1738,7 +1738,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 /* шапка при відкритті */
 
 .vacancy-item.is-open .vacancy-row {
-    border-radius: 16px 16px 0 0;
+    border-radius: 1px 1px 0 0;
 }
 
 /* плюсик → мінус */
@@ -1989,7 +1989,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     .vacancy-item {
         /* ВАЖЛИВО: було 110%, через це воно вилазило. Ставимо 100% */
         width: 100%;
-        border-radius: 12px; /* Трохи акуратніші кути */
+        border-radius: 1px; /* Трохи акуратніші кути */
     }
 
     /* Внутрішня частина рядка */
@@ -2029,7 +2029,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     .vacancy-type {
         font-size: 0.65rem; /* Дрібний текст */
         padding: 2px 8px;
-        border-radius: 6px;
+        border-radius: 1px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         line-height: 1;
@@ -2212,7 +2212,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 .card {
     position: relative;
     height: var(--card-h);
-    border-radius: 18px;
+    border-radius: 1px;
     overflow: hidden;
 
     background: linear-gradient(
@@ -2358,7 +2358,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     top: -70px;
     width: 70px;
     height: 70px;
-    border-radius: 12px;
+    border-radius: 1px;
     background: transparent;
     color: var(--khaki-light);
     border: 1px solid color-mix(in srgb, var(--sandstone) 40%, transparent);
@@ -2484,7 +2484,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 /* card */
 .faq-item{
     position:relative;
-    border-radius:16px;
+    border-radius:1px;
     background:
             linear-gradient(180deg,
             color-mix(in oklab, var(--card) 60%, transparent),
@@ -2545,7 +2545,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     transform: translateY(-50%);
     width: 34px;
     height: 34px;
-    border-radius: 999px;
+    border-radius: 1px;
     display: grid;
     place-items: center;
     font: 800 20px/1 'Inter', system-ui, sans-serif;
@@ -2632,7 +2632,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     .faq-header{ padding:16px; }
     .faq-body{ padding:0 16px 16px 16px; }
 
-    .faq-item{ border-radius:14px; }
+    .faq-item{ border-radius:1px; }
 
     .faq-q, .faq-a{ padding-left:50px; }
     .faq-q::before{
@@ -2667,7 +2667,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 .form-input {
     width: 100%;
     padding: 0.75rem 1rem;
-    border-radius: 0.75rem;
+    border-radius: 1px;
     border: 1px solid var(--border-input);
     background-color: rgba(255,255,255,.04);
     color: var(--khaki-light);
@@ -2710,7 +2710,7 @@ h4 { font-size: 1.25rem; } /* 20px */
     margin: 0 auto;
     background: rgba(0,0,0,.14);
     border: 1px solid rgba(230,216,173,.14);
-    border-radius: 16px;
+    border-radius: 1px;
     padding: 2rem;
     box-shadow: 0 10px 24px rgba(0,0,0,.18);
 }
@@ -2787,7 +2787,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 #contact .social-link {
     display: inline-block;
     padding: .45rem .75rem;
-    border-radius: 10px;
+    border-radius: 1px;
     background: rgba(255,255,255,.06);
     border: 1px solid rgba(230,216,173,.18);
     color: var(--khaki-light);
@@ -2802,7 +2802,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 
 /* Кнопки у палітрі сайту */
 #contact .btn {
-    border-radius: 12px;
+    border-radius: 1px;
     padding: .85rem 1.1rem;
     font-weight: 700;
     border: 1px solid transparent;
@@ -2821,7 +2821,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 .apply-feature {
     background: rgba(255,255,255,.03);
     border: 1px dashed rgba(230,216,173,.25);
-    border-radius: 12px;
+    border-radius: 1px;
     padding: 1rem;
     margin: .5rem 0 1rem;
     color: color-mix(in oklab, var(--khaki-light) 88%, white);
@@ -2840,7 +2840,7 @@ h4 { font-size: 1.25rem; } /* 20px */
 .apply-result {
     padding: 1rem;
     background-color: var(--deep-green);
-    border-radius: 0.375rem;
+    border-radius: 1px;
     border: 1px solid var(--border-color);
     font-size: 0.875rem;
 }
