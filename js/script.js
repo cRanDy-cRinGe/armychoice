@@ -1143,3 +1143,27 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const navbar = document.querySelector('.navbar');
+    const heroSection = document.querySelector('.hero');
+
+    // Функція оновлення стану хедера
+    const updateNavbar = () => {
+        if (!heroSection || !navbar) return;
+
+        // Висота Hero секції мінус висота самого меню (щоб зміна була плавною на межі)
+        const triggerHeight = heroSection.offsetHeight - 80;
+
+        if (window.scrollY > triggerHeight) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    };
+
+    // Слухаємо скрол
+    window.addEventListener('scroll', updateNavbar);
+
+    // Також запускаємо при завантаженні (раптом сторінка оновлена посередині)
+    updateNavbar();
+});

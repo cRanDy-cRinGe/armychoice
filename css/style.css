@@ -221,11 +221,11 @@ h4 { font-size: 1.25rem; } /* 20px */
     height: 4rem; /* 64px */
 }
 
-.navbar.sticky {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-}
+/*.navbar.sticky {*/
+/*    position: sticky;*/
+/*    top: 0;*/
+/*    z-index: 50;*/
+/*}*/
 
 .nav-container {
     display: flex;
@@ -400,30 +400,48 @@ h4 { font-size: 1.25rem; } /* 20px */
 .close-menu:hover {
     opacity: 1;
 }
+/* ==== Навігація ==== */
+.navbar {
+    width: 100%;
+    height: 4rem; /* 64px */
 
+    /* ВАЖЛИВО: Fixed, щоб меню "лежало" поверх відео */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50;
+
+    /* Початковий стан: повністю прозорий */
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+    backdrop-filter: none;
+
+    /* Плавна анімація переходу кольору */
+    transition: background-color 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+/* Цей клас додасть JS, коли ми прогорнемо Hero секцію */
+.navbar.scrolled {
+    background-color: rgba(57, 57, 57, 0.9); /* Твій темний колір */
+    backdrop-filter: blur(10px);              /* Ефект розмиття фону */
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Видаляємо або коментуємо старий sticky, він більше не потрібен */
+/* .navbar.sticky { ... } */
 /* ==== Hero (Головна) ==== */
 .hero {
     position: relative;
-    min-height: calc(100vh - 4rem);
+    /*min-height: calc(100vh - 4rem);*/
+    min-height: 100vh;
     display: flex;
     align-items: center;
     padding: clamp(1rem, 3vw, 2rem) 0 0 0;
     overflow: clip; /* акуратні тіні/анім */
     /*background-color: var(--deep-green);*/
 }
-/*.hero::before {*/
-/*    content: "";*/
-/*    position: absolute;*/
-/*    inset: 0;*/
-/*    background-image: url("/static/PATERN.png");*/
-/*    background-repeat: no-repeat;*/
-/*    background-size: 96%;*/
-/*    background-position: center;*/
-/*    background-position-y: -60px;*/
-/*    opacity: 0.5;*/
-/*    z-index: 0;*/
-/*    pointer-events: none;*/
-/*}*/
+
+
 @media (max-width: 768px) {
     .hero {
         min-height: calc(100vh - 4rem);
@@ -502,8 +520,6 @@ h4 { font-size: 1.25rem; } /* 20px */
     position: absolute;
     inset: 65% -4% -8% -4%; /* підкреслення-«капля» */
     border-radius: 999px;
-    /*background: currentColor;         !* не чіпаємо палітру — використовуємо поточний колір *!*/
-    /*opacity: .14;                     !* лише акцент *!*/
     z-index: -1;
 }
 
@@ -550,16 +566,12 @@ h4 { font-size: 1.25rem; } /* 20px */
 
 .hero-frame {
     position: relative;
-    /*aspect-ratio: 16 / 11;*/
     border-radius: 18px;
     overflow: hidden;
-    /*box-shadow: 0 18px 40px rgba(0,0,0,.25);*/
-    /*outline: 1px solid rgba(0,0,0,.08);*/
     transform: translateZ(0);
     max-height: 650px;
     max-width: 750px;
     filter: drop-shadow(0 18px 40px rgba(0,0,0,.25));
-    /*-webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);*/
     mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
 }
 
@@ -574,43 +586,30 @@ h4 { font-size: 1.25rem; } /* 20px */
     transform: scale(1.02);
     animation: heroFade .8s ease .1s forwards;
 }
-/*.hero-frame::before {*/
-/*    content: "";*/
-/*    position: absolute;*/
-/*    inset: 0;*/
-/*    background-image: url("/static/map.png");*/
-/*    background-repeat: no-repeat;*/
-/*    background-size: 100%;*/
-/*    background-position-y: 60px;*/
-/*    background-position: center;*/
 
-/*    !*background-position-x: -20px;*!*/
-/*    opacity: 1; !* ← зменшуй або збільшуй *!*/
-/*    z-index: -1;*/
-/*    pointer-events: none;*/
-
-/*}*/
 .hero-map {
     position: absolute;
-    top: 50%;
-    left: 50%; /* Центруємо по горизонталі */
-    transform: translate(-50%, -50%); /* Рівне центрування */
-    width: 96%; /* Робимо її ширшою за контейнер */
-    max-width: none; /* Дозволяємо виходити за рамки */
-    z-index: -1; /* Точно позаду солдата */
-    pointer-events: none; /* Щоб не заважала клікам */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden; /* Обрізає все, що виходить за рамки */
 }
 
-.hero-map img {
-    width: 100%; /* Займає всю ширину батьківського блоку (.hero-map) */
-    height: auto;
-    opacity: 0.6; /* Легка прозорість, щоб не заважала тексту */
-    filter: drop-shadow(0 0 30px rgba(255, 9, 0, 0.4)); /* Тінь/Світіння */
-}
+.hero-map video {
+    width: 100%;
+    height: 100%;
 
+    /* cover — заповнює весь екран (краї обрізаються, ефект зуму).
+       contain — показує все відео цілком (можуть бути порожні смуги).
+       Залиш cover, якщо це фон, але якщо треба бачити кордони — зміни на contain */
+    object-fit: cover;
+
+    opacity: 0.6;
+    filter: drop-shadow(0 0 3px rgb(255, 47, 0)) drop-shadow(0 0 30px rgba(255, 9, 0, 0.4));
+}
 /* Адаптив для мапи */
 @media (max-width: 768px) {
     .hero-map {
