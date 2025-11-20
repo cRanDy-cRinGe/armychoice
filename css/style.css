@@ -1173,15 +1173,12 @@ h4 { font-size: 1.25rem; } /* 20px */
         transform: translateY(0px) rotate(0deg);
     }
     33% {
-        /* Піднімається і трохи хилиться вправо */
-        transform: translateY(-10px) rotate(2deg);
+        transform: translateY(-20px) rotate(3deg);
     }
     66% {
-        /* Опускається нижче початкової точки і хилиться вліво */
-        transform: translateY(5px) rotate(-1.5deg);
+        transform: translateY(10px) rotate(-2.5deg);
     }
     100% {
-        /* Повертається у вихідну позицію */
         transform: translateY(0px) rotate(0deg);
     }
 }
@@ -1191,17 +1188,11 @@ h4 { font-size: 1.25rem; } /* 20px */
     top: 0;
     left: 0;
     width: 100%;
-
-    /* Параметри анімації:
-       6s - повільний цикл (чим більше число, тим повільніше)
-       ease-in-out - плавний старт і плавна зупинка
-       infinite - нескінченний повтор
-    */
     animation: droneHover 6s ease-in-out infinite;
-
-    /* Оптимізація для браузера, щоб не було "смикання" */
     will-change: transform;
 }
+
+
 /* =========================================
    SECTION: Compare (Neo Camouflage Edition) - With Accent Bars
    ========================================= */
